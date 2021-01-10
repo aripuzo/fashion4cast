@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "667407990088",
+    "project_id": "fashion4cast-f7f71",
+    "storage_bucket": "fashion4cast-f7f71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667407990088:android:9733826d8e48e58820477d",
+        "android_client_info": {
+          "package_name": "com.fashion4cast.fashion4cast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667407990088-9aj9fibhpnv0v11bgdvco2d7jlutdrdv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqUkpSvVylGWuiwOAWsiogiVskkI2kM6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667407990088-9aj9fibhpnv0v11bgdvco2d7jlutdrdv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
