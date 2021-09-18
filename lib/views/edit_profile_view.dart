@@ -26,7 +26,7 @@ class _EditProfileState extends State<EditProfile> with TickerProviderStateMixin
 
   AnimationController _loginButtonController;
 
-  Future<File> imageFile;
+  Future<XFile> imageFile;
 
   @override
   void initState() {
@@ -92,9 +92,10 @@ class _EditProfileState extends State<EditProfile> with TickerProviderStateMixin
     }
   }
 
-  getImage(ImageSource source) {
+  getImage(ImageSource source) async {
+    final ImagePicker _picker = ImagePicker();
     setState(() {
-      imageFile = ImagePicker.pickImage(source: source);
+      imageFile = _picker.pickImage(source: source);
     });
   }
 
@@ -147,9 +148,9 @@ class _EditProfileState extends State<EditProfile> with TickerProviderStateMixin
                             color: Colors.white, // border color
                             shape: BoxShape.circle,
                           ),
-                          child: FutureBuilder<File>(
+                          child: FutureBuilder<XFile>(
                             future: imageFile,
-                            builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+                            builder: (BuildContext context, AsyncSnapshot<XFile> snapshot) {
                               if (snapshot.error != null) {
                                 return const Text(
                                   'Error Picking Image',
@@ -161,7 +162,7 @@ class _EditProfileState extends State<EditProfile> with TickerProviderStateMixin
                               else {
                                 return CircleAvatar(
                                     backgroundImage: snapshot.data != null ?
-                                      FileImage(snapshot.data): _viewModel.user.avatar != null ?
+                                      FileImage(File(snapshot.data.path)): _viewModel.user.avatar != null ?
                                       NetworkImage(_viewModel.user.avatar):
                                       ExactAssetImage('assets/images/avatar.png'),
                                     foregroundColor: Colors.white,
@@ -261,7 +262,7 @@ class _EditProfileState extends State<EditProfile> with TickerProviderStateMixin
                                   userEmail: _viewModel.userEmailController.text
                                 );
                                 if(imageFile != null)
-                                  imageFile.then((value) => _viewModel.updateImage(file: value));
+                                  imageFile.then((value) => _viewModel.updateImage(file: File(value.path)));
                               },
                             ),
                           );

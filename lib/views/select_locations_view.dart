@@ -1,4 +1,4 @@
-import 'package:circular_check_box/circular_check_box.dart';
+import 'package:circle_checkbox/redev_checkbox.dart';
 import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/app/app_routes.dart';
 import 'package:fashion4cast/databases/app_database.dart';
@@ -194,7 +194,7 @@ class _SelectCitiesState extends State<SelectLocations> {
                   SizedBox(
                     width: ScreenUtil().setWidth(12),
                     height: ScreenUtil().setWidth(12),
-                    child: CircularCheckBox(
+                    child: CircleCheckbox(
                       value: true,
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                       onChanged: (bool x) {

@@ -11,7 +11,7 @@ description: A new Flutter application.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1+8
+version: 1.1.0+0
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -23,37 +23,37 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.1+1
-  moor: ^3.4.0
-  sqlite3_flutter_libs: ^0.2.0
-  path_provider: ^1.6.24
+  moor: ^4.5.0
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.0.3
   path: ^1.7.0
   fluttertoast: any
   shared_preferences: any
   flutter_swiper: ^1.1.6
   logger: any
-  json_annotation: any
-  dio: ^3.0.10
-  circular_check_box: ^1.0.4
+  json_annotation: ^4.1.0
+  dio: ^4.0.0
+  circle_checkbox: ^0.0.2+1
   loading: ^1.0.2
-  flutter_screenutil: ^3.2.0
+  flutter_screenutil: ^5.0.0+2
   flutter_icons: ^1.1.0
-  intl: ^0.16.1
-  firebase_core: ^0.5.2
-  firebase_crashlytics: ^0.2.3
+  intl: ^0.17.0
+  firebase_core: ^1.6.0
+  firebase_crashlytics: ^2.2.1
   cached_network_image: ^2.3.3
-  flutter_custom_tabs: ^0.6.0
+#  flutter_custom_tabs: ^1.0.3
   streaming_shared_preferences: ^1.0.1
-  image_picker: ^0.6.7+14
+  image_picker: ^0.8.4
   flutter_offline: ^0.3.0
-  onesignal_flutter: ^2.6.1
-  url_launcher: ^5.7.10
-  email_validator: ^1.0.5
+  onesignal_flutter: ^3.2.3
+  url_launcher: ^6.0.10
+  email_validator: ^2.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  moor_generator: ^3.4.0
-  build_runner: ^1.10.6
+  moor_generator: ^4.5.0
+  build_runner: ^2.1.2
   json_serializable: any
 
 

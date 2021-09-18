@@ -56,8 +56,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       if (e.response != null && e.response.data != null) {
@@ -91,8 +91,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       if (e.response != null && e.response.data != null) {
@@ -121,8 +121,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       return null;
@@ -148,8 +148,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       return null;
@@ -174,8 +174,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       if (e.response != null && e.response.data != null) {
@@ -207,8 +207,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       if (e.response != null && e.response.data != null) {
@@ -238,8 +238,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       if (e.response != null && e.response.data != null) {
@@ -282,8 +282,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       if (e.response != null && e.response.data != null) {
@@ -301,8 +301,8 @@ class Api {
       logger.e('''Error message is ${e.message}
                   Error type is ${e.type}
                   Error is ${e.error}
-                  For request ${e.request}
-                  And Response ${e.response != null ? 'request => ${e.response.request} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.request}'}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
                   Stacktrace is ${e.toString()}'''
       );
       if (e.response != null && e.response.data != null) {

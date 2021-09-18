@@ -24,17 +24,17 @@ class Place extends DataClass implements Insertable<Place> {
   factory Place.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    final doubleType = db.typeSystem.forDartType<double>();
     return Place(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      description: stringType
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      description: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}description']),
-      lat: doubleType.mapFromDatabaseResponse(data['${effectivePrefix}lat']),
-      lng: doubleType.mapFromDatabaseResponse(data['${effectivePrefix}lng']),
-      external_id: stringType
+      lat: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}lat']),
+      lng: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}lng']),
+      external_id: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}external_id']),
     );
   }
@@ -140,7 +140,7 @@ class Place extends DataClass implements Insertable<Place> {
               $mrjc(
                   lat.hashCode, $mrjc(lng.hashCode, external_id.hashCode))))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Place &&
           other.id == this.id &&
@@ -254,84 +254,54 @@ class $PlacesTable extends Places with TableInfo<$PlacesTable, Place> {
   final String _alias;
   $PlacesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+  GeneratedColumn<int> _id;
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        $customConstraints: 'UNIQUE');
-  }
-
+  GeneratedColumn<int> get id =>
+      _id ??= GeneratedColumn<int>('id', aliasedName, false,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          $customConstraints: 'UNIQUE');
   final VerificationMeta _nameMeta = const VerificationMeta('name');
-  GeneratedTextColumn _name;
+  GeneratedColumn<String> _name;
   @override
-  GeneratedTextColumn get name => _name ??= _constructName();
-  GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn(
-      'name',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<String> get name =>
+      _name ??= GeneratedColumn<String>('name', aliasedName, false,
+          typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
-  GeneratedTextColumn _description;
+  GeneratedColumn<String> _description;
   @override
-  GeneratedTextColumn get description =>
-      _description ??= _constructDescription();
-  GeneratedTextColumn _constructDescription() {
-    return GeneratedTextColumn(
-      'description',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get description =>
+      _description ??= GeneratedColumn<String>('description', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _latMeta = const VerificationMeta('lat');
-  GeneratedRealColumn _lat;
+  GeneratedColumn<double> _lat;
   @override
-  GeneratedRealColumn get lat => _lat ??= _constructLat();
-  GeneratedRealColumn _constructLat() {
-    return GeneratedRealColumn(
-      'lat',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<double> get lat =>
+      _lat ??= GeneratedColumn<double>('lat', aliasedName, false,
+          typeName: 'REAL', requiredDuringInsert: true);
   final VerificationMeta _lngMeta = const VerificationMeta('lng');
-  GeneratedRealColumn _lng;
+  GeneratedColumn<double> _lng;
   @override
-  GeneratedRealColumn get lng => _lng ??= _constructLng();
-  GeneratedRealColumn _constructLng() {
-    return GeneratedRealColumn(
-      'lng',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<double> get lng =>
+      _lng ??= GeneratedColumn<double>('lng', aliasedName, false,
+          typeName: 'REAL', requiredDuringInsert: true);
   final VerificationMeta _external_idMeta =
       const VerificationMeta('external_id');
-  GeneratedTextColumn _external_id;
+  GeneratedColumn<String> _external_id;
   @override
-  GeneratedTextColumn get external_id =>
-      _external_id ??= _constructExternalId();
-  GeneratedTextColumn _constructExternalId() {
-    return GeneratedTextColumn('external_id', $tableName, true,
-        $customConstraints: 'UNIQUE');
-  }
-
+  GeneratedColumn<String> get external_id =>
+      _external_id ??= GeneratedColumn<String>('external_id', aliasedName, true,
+          typeName: 'TEXT',
+          requiredDuringInsert: false,
+          $customConstraints: 'UNIQUE');
   @override
   List<GeneratedColumn> get $columns =>
       [id, name, description, lat, lng, external_id];
   @override
-  $PlacesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'places';
   @override
-  String get $tableName => _alias ?? 'places';
-  @override
-  final String actualTableName = 'places';
+  String get actualTableName => 'places';
   @override
   VerificationContext validateIntegrity(Insertable<Place> instance,
       {bool isInserting = false}) {
@@ -377,8 +347,8 @@ class $PlacesTable extends Places with TableInfo<$PlacesTable, Place> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Place map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Place.fromData(data, _db, prefix: effectivePrefix);
+    return Place.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -414,29 +384,29 @@ class Weather extends DataClass implements Insertable<Weather> {
   factory Weather.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final stringType = db.typeSystem.forDartType<String>();
-    final intType = db.typeSystem.forDartType<int>();
-    final doubleType = db.typeSystem.forDartType<double>();
-    final boolType = db.typeSystem.forDartType<bool>();
     return Weather(
-      id: stringType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      placeId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}place_id']),
-      description: stringType
+      id: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      placeId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}place_id']),
+      description: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}description']),
-      summery:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}summery']),
-      icon: stringType.mapFromDatabaseResponse(data['${effectivePrefix}icon']),
-      timestamp:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}timestamp']),
-      min_temp: doubleType
+      summery: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}summery']),
+      icon: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}icon']),
+      timestamp: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}timestamp']),
+      min_temp: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}min_temp']),
-      max_temp: doubleType
+      max_temp: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}max_temp']),
-      is_today:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_today']),
-      day: stringType.mapFromDatabaseResponse(data['${effectivePrefix}day']),
-      date: stringType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
+      is_today: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}is_today']),
+      day: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}day']),
+      date: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}date']),
     );
   }
   @override
@@ -608,7 +578,7 @@ class Weather extends DataClass implements Insertable<Weather> {
                                       $mrjc(day.hashCode,
                                           date.hashCode)))))))))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Weather &&
           other.id == this.id &&
@@ -780,136 +750,76 @@ class $WeathersTable extends Weathers with TableInfo<$WeathersTable, Weather> {
   final String _alias;
   $WeathersTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedTextColumn _id;
+  GeneratedColumn<String> _id;
   @override
-  GeneratedTextColumn get id => _id ??= _constructId();
-  GeneratedTextColumn _constructId() {
-    return GeneratedTextColumn('id', $tableName, false,
-        $customConstraints: 'UNIQUE');
-  }
-
+  GeneratedColumn<String> get id =>
+      _id ??= GeneratedColumn<String>('id', aliasedName, false,
+          typeName: 'TEXT',
+          requiredDuringInsert: true,
+          $customConstraints: 'UNIQUE');
   final VerificationMeta _placeIdMeta = const VerificationMeta('placeId');
-  GeneratedIntColumn _placeId;
+  GeneratedColumn<int> _placeId;
   @override
-  GeneratedIntColumn get placeId => _placeId ??= _constructPlaceId();
-  GeneratedIntColumn _constructPlaceId() {
-    return GeneratedIntColumn(
-      'place_id',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<int> get placeId =>
+      _placeId ??= GeneratedColumn<int>('place_id', aliasedName, true,
+          typeName: 'INTEGER', requiredDuringInsert: false);
   final VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
-  GeneratedTextColumn _description;
+  GeneratedColumn<String> _description;
   @override
-  GeneratedTextColumn get description =>
-      _description ??= _constructDescription();
-  GeneratedTextColumn _constructDescription() {
-    return GeneratedTextColumn(
-      'description',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get description =>
+      _description ??= GeneratedColumn<String>('description', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _summeryMeta = const VerificationMeta('summery');
-  GeneratedTextColumn _summery;
+  GeneratedColumn<String> _summery;
   @override
-  GeneratedTextColumn get summery => _summery ??= _constructSummery();
-  GeneratedTextColumn _constructSummery() {
-    return GeneratedTextColumn(
-      'summery',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get summery =>
+      _summery ??= GeneratedColumn<String>('summery', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _iconMeta = const VerificationMeta('icon');
-  GeneratedTextColumn _icon;
+  GeneratedColumn<String> _icon;
   @override
-  GeneratedTextColumn get icon => _icon ??= _constructIcon();
-  GeneratedTextColumn _constructIcon() {
-    return GeneratedTextColumn(
-      'icon',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get icon =>
+      _icon ??= GeneratedColumn<String>('icon', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _timestampMeta = const VerificationMeta('timestamp');
-  GeneratedIntColumn _timestamp;
+  GeneratedColumn<int> _timestamp;
   @override
-  GeneratedIntColumn get timestamp => _timestamp ??= _constructTimestamp();
-  GeneratedIntColumn _constructTimestamp() {
-    return GeneratedIntColumn(
-      'timestamp',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<int> get timestamp =>
+      _timestamp ??= GeneratedColumn<int>('timestamp', aliasedName, true,
+          typeName: 'INTEGER', requiredDuringInsert: false);
   final VerificationMeta _min_tempMeta = const VerificationMeta('min_temp');
-  GeneratedRealColumn _min_temp;
+  GeneratedColumn<double> _min_temp;
   @override
-  GeneratedRealColumn get min_temp => _min_temp ??= _constructMinTemp();
-  GeneratedRealColumn _constructMinTemp() {
-    return GeneratedRealColumn(
-      'min_temp',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get min_temp =>
+      _min_temp ??= GeneratedColumn<double>('min_temp', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _max_tempMeta = const VerificationMeta('max_temp');
-  GeneratedRealColumn _max_temp;
+  GeneratedColumn<double> _max_temp;
   @override
-  GeneratedRealColumn get max_temp => _max_temp ??= _constructMaxTemp();
-  GeneratedRealColumn _constructMaxTemp() {
-    return GeneratedRealColumn(
-      'max_temp',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get max_temp =>
+      _max_temp ??= GeneratedColumn<double>('max_temp', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _is_todayMeta = const VerificationMeta('is_today');
-  GeneratedBoolColumn _is_today;
+  GeneratedColumn<bool> _is_today;
   @override
-  GeneratedBoolColumn get is_today => _is_today ??= _constructIsToday();
-  GeneratedBoolColumn _constructIsToday() {
-    return GeneratedBoolColumn(
-      'is_today',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<bool> get is_today =>
+      _is_today ??= GeneratedColumn<bool>('is_today', aliasedName, true,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'CHECK (is_today IN (0, 1))');
   final VerificationMeta _dayMeta = const VerificationMeta('day');
-  GeneratedTextColumn _day;
+  GeneratedColumn<String> _day;
   @override
-  GeneratedTextColumn get day => _day ??= _constructDay();
-  GeneratedTextColumn _constructDay() {
-    return GeneratedTextColumn(
-      'day',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get day =>
+      _day ??= GeneratedColumn<String>('day', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
-  GeneratedTextColumn _date;
+  GeneratedColumn<String> _date;
   @override
-  GeneratedTextColumn get date => _date ??= _constructDate();
-  GeneratedTextColumn _constructDate() {
-    return GeneratedTextColumn(
-      'date',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get date =>
+      _date ??= GeneratedColumn<String>('date', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -925,11 +835,9 @@ class $WeathersTable extends Weathers with TableInfo<$WeathersTable, Weather> {
         date
       ];
   @override
-  $WeathersTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'weathers';
   @override
-  String get $tableName => _alias ?? 'weathers';
-  @override
-  final String actualTableName = 'weathers';
+  String get actualTableName => 'weathers';
   @override
   VerificationContext validateIntegrity(Insertable<Weather> instance,
       {bool isInserting = false}) {
@@ -989,8 +897,8 @@ class $WeathersTable extends Weathers with TableInfo<$WeathersTable, Weather> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Weather map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Weather.fromData(data, _db, prefix: effectivePrefix);
+    return Weather.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -1043,45 +951,45 @@ class CurrentWeather extends DataClass implements Insertable<CurrentWeather> {
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
-    final doubleType = db.typeSystem.forDartType<double>();
-    final boolType = db.typeSystem.forDartType<bool>();
     return CurrentWeather(
-      placeId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}place_id']),
-      description: stringType
+      placeId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}place_id']),
+      description: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}description']),
-      summery:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}summery']),
-      icon: stringType.mapFromDatabaseResponse(data['${effectivePrefix}icon']),
-      pressure: doubleType
+      summery: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}summery']),
+      icon: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}icon']),
+      pressure: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}pressure']),
-      temperature: doubleType
+      temperature: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}temperature']),
-      humidity: doubleType
+      humidity: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}humidity']),
-      pressure_daily: doubleType
+      pressure_daily: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}pressure_daily']),
-      chance_of_rain: doubleType
+      chance_of_rain: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}chance_of_rain']),
-      wind_direction: intType
+      wind_direction: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}wind_direction']),
-      external_id: stringType
+      external_id: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}external_id']),
-      background: stringType
+      background: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}background']),
-      alert: boolType.mapFromDatabaseResponse(data['${effectivePrefix}alert']),
-      min_temp: doubleType
+      alert: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}alert']),
+      min_temp: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}min_temp']),
-      wind_speed: doubleType
+      wind_speed: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}wind_speed']),
-      max_temp: doubleType
+      max_temp: const RealType()
           .mapFromDatabaseResponse(data['${effectivePrefix}max_temp']),
-      is_today:
-          boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_today']),
-      day: stringType.mapFromDatabaseResponse(data['${effectivePrefix}day']),
-      date: stringType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
+      is_today: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}is_today']),
+      day: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}day']),
+      date: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}date']),
     );
   }
   @override
@@ -1362,7 +1270,7 @@ class CurrentWeather extends DataClass implements Insertable<CurrentWeather> {
                                                                           day.hashCode,
                                                                           date.hashCode)))))))))))))))))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CurrentWeather &&
           other.placeId == this.placeId &&
@@ -1631,242 +1539,131 @@ class $CurrentWeathersTable extends CurrentWeathers
   final String _alias;
   $CurrentWeathersTable(this._db, [this._alias]);
   final VerificationMeta _placeIdMeta = const VerificationMeta('placeId');
-  GeneratedIntColumn _placeId;
+  GeneratedColumn<int> _placeId;
   @override
-  GeneratedIntColumn get placeId => _placeId ??= _constructPlaceId();
-  GeneratedIntColumn _constructPlaceId() {
-    return GeneratedIntColumn('place_id', $tableName, true,
-        $customConstraints: 'UNIQUE');
-  }
-
+  GeneratedColumn<int> get placeId =>
+      _placeId ??= GeneratedColumn<int>('place_id', aliasedName, true,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          $customConstraints: 'UNIQUE');
   final VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
-  GeneratedTextColumn _description;
+  GeneratedColumn<String> _description;
   @override
-  GeneratedTextColumn get description =>
-      _description ??= _constructDescription();
-  GeneratedTextColumn _constructDescription() {
-    return GeneratedTextColumn(
-      'description',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get description =>
+      _description ??= GeneratedColumn<String>('description', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _summeryMeta = const VerificationMeta('summery');
-  GeneratedTextColumn _summery;
+  GeneratedColumn<String> _summery;
   @override
-  GeneratedTextColumn get summery => _summery ??= _constructSummery();
-  GeneratedTextColumn _constructSummery() {
-    return GeneratedTextColumn(
-      'summery',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get summery =>
+      _summery ??= GeneratedColumn<String>('summery', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _iconMeta = const VerificationMeta('icon');
-  GeneratedTextColumn _icon;
+  GeneratedColumn<String> _icon;
   @override
-  GeneratedTextColumn get icon => _icon ??= _constructIcon();
-  GeneratedTextColumn _constructIcon() {
-    return GeneratedTextColumn(
-      'icon',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get icon =>
+      _icon ??= GeneratedColumn<String>('icon', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _pressureMeta = const VerificationMeta('pressure');
-  GeneratedRealColumn _pressure;
+  GeneratedColumn<double> _pressure;
   @override
-  GeneratedRealColumn get pressure => _pressure ??= _constructPressure();
-  GeneratedRealColumn _constructPressure() {
-    return GeneratedRealColumn(
-      'pressure',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get pressure =>
+      _pressure ??= GeneratedColumn<double>('pressure', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _temperatureMeta =
       const VerificationMeta('temperature');
-  GeneratedRealColumn _temperature;
+  GeneratedColumn<double> _temperature;
   @override
-  GeneratedRealColumn get temperature =>
-      _temperature ??= _constructTemperature();
-  GeneratedRealColumn _constructTemperature() {
-    return GeneratedRealColumn(
-      'temperature',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get temperature =>
+      _temperature ??= GeneratedColumn<double>('temperature', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _humidityMeta = const VerificationMeta('humidity');
-  GeneratedRealColumn _humidity;
+  GeneratedColumn<double> _humidity;
   @override
-  GeneratedRealColumn get humidity => _humidity ??= _constructHumidity();
-  GeneratedRealColumn _constructHumidity() {
-    return GeneratedRealColumn(
-      'humidity',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get humidity =>
+      _humidity ??= GeneratedColumn<double>('humidity', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _pressure_dailyMeta =
       const VerificationMeta('pressure_daily');
-  GeneratedRealColumn _pressure_daily;
+  GeneratedColumn<double> _pressure_daily;
   @override
-  GeneratedRealColumn get pressure_daily =>
-      _pressure_daily ??= _constructPressureDaily();
-  GeneratedRealColumn _constructPressureDaily() {
-    return GeneratedRealColumn(
-      'pressure_daily',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get pressure_daily => _pressure_daily ??=
+      GeneratedColumn<double>('pressure_daily', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _chance_of_rainMeta =
       const VerificationMeta('chance_of_rain');
-  GeneratedRealColumn _chance_of_rain;
+  GeneratedColumn<double> _chance_of_rain;
   @override
-  GeneratedRealColumn get chance_of_rain =>
-      _chance_of_rain ??= _constructChanceOfRain();
-  GeneratedRealColumn _constructChanceOfRain() {
-    return GeneratedRealColumn(
-      'chance_of_rain',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get chance_of_rain => _chance_of_rain ??=
+      GeneratedColumn<double>('chance_of_rain', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _wind_directionMeta =
       const VerificationMeta('wind_direction');
-  GeneratedIntColumn _wind_direction;
+  GeneratedColumn<int> _wind_direction;
   @override
-  GeneratedIntColumn get wind_direction =>
-      _wind_direction ??= _constructWindDirection();
-  GeneratedIntColumn _constructWindDirection() {
-    return GeneratedIntColumn(
-      'wind_direction',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<int> get wind_direction => _wind_direction ??=
+      GeneratedColumn<int>('wind_direction', aliasedName, true,
+          typeName: 'INTEGER', requiredDuringInsert: false);
   final VerificationMeta _external_idMeta =
       const VerificationMeta('external_id');
-  GeneratedTextColumn _external_id;
+  GeneratedColumn<String> _external_id;
   @override
-  GeneratedTextColumn get external_id =>
-      _external_id ??= _constructExternalId();
-  GeneratedTextColumn _constructExternalId() {
-    return GeneratedTextColumn(
-      'external_id',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get external_id =>
+      _external_id ??= GeneratedColumn<String>('external_id', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _backgroundMeta = const VerificationMeta('background');
-  GeneratedTextColumn _background;
+  GeneratedColumn<String> _background;
   @override
-  GeneratedTextColumn get background => _background ??= _constructBackground();
-  GeneratedTextColumn _constructBackground() {
-    return GeneratedTextColumn(
-      'background',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get background =>
+      _background ??= GeneratedColumn<String>('background', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _alertMeta = const VerificationMeta('alert');
-  GeneratedBoolColumn _alert;
+  GeneratedColumn<bool> _alert;
   @override
-  GeneratedBoolColumn get alert => _alert ??= _constructAlert();
-  GeneratedBoolColumn _constructAlert() {
-    return GeneratedBoolColumn(
-      'alert',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<bool> get alert =>
+      _alert ??= GeneratedColumn<bool>('alert', aliasedName, true,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'CHECK (alert IN (0, 1))');
   final VerificationMeta _min_tempMeta = const VerificationMeta('min_temp');
-  GeneratedRealColumn _min_temp;
+  GeneratedColumn<double> _min_temp;
   @override
-  GeneratedRealColumn get min_temp => _min_temp ??= _constructMinTemp();
-  GeneratedRealColumn _constructMinTemp() {
-    return GeneratedRealColumn(
-      'min_temp',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get min_temp =>
+      _min_temp ??= GeneratedColumn<double>('min_temp', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _wind_speedMeta = const VerificationMeta('wind_speed');
-  GeneratedRealColumn _wind_speed;
+  GeneratedColumn<double> _wind_speed;
   @override
-  GeneratedRealColumn get wind_speed => _wind_speed ??= _constructWindSpeed();
-  GeneratedRealColumn _constructWindSpeed() {
-    return GeneratedRealColumn(
-      'wind_speed',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get wind_speed =>
+      _wind_speed ??= GeneratedColumn<double>('wind_speed', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _max_tempMeta = const VerificationMeta('max_temp');
-  GeneratedRealColumn _max_temp;
+  GeneratedColumn<double> _max_temp;
   @override
-  GeneratedRealColumn get max_temp => _max_temp ??= _constructMaxTemp();
-  GeneratedRealColumn _constructMaxTemp() {
-    return GeneratedRealColumn(
-      'max_temp',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<double> get max_temp =>
+      _max_temp ??= GeneratedColumn<double>('max_temp', aliasedName, true,
+          typeName: 'REAL', requiredDuringInsert: false);
   final VerificationMeta _is_todayMeta = const VerificationMeta('is_today');
-  GeneratedBoolColumn _is_today;
+  GeneratedColumn<bool> _is_today;
   @override
-  GeneratedBoolColumn get is_today => _is_today ??= _constructIsToday();
-  GeneratedBoolColumn _constructIsToday() {
-    return GeneratedBoolColumn(
-      'is_today',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<bool> get is_today =>
+      _is_today ??= GeneratedColumn<bool>('is_today', aliasedName, true,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'CHECK (is_today IN (0, 1))');
   final VerificationMeta _dayMeta = const VerificationMeta('day');
-  GeneratedTextColumn _day;
+  GeneratedColumn<String> _day;
   @override
-  GeneratedTextColumn get day => _day ??= _constructDay();
-  GeneratedTextColumn _constructDay() {
-    return GeneratedTextColumn(
-      'day',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get day =>
+      _day ??= GeneratedColumn<String>('day', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _dateMeta = const VerificationMeta('date');
-  GeneratedTextColumn _date;
+  GeneratedColumn<String> _date;
   @override
-  GeneratedTextColumn get date => _date ??= _constructDate();
-  GeneratedTextColumn _constructDate() {
-    return GeneratedTextColumn(
-      'date',
-      $tableName,
-      true,
-    );
-  }
-
+  GeneratedColumn<String> get date =>
+      _date ??= GeneratedColumn<String>('date', aliasedName, true,
+          typeName: 'TEXT', requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         placeId,
@@ -1890,11 +1687,9 @@ class $CurrentWeathersTable extends CurrentWeathers
         date
       ];
   @override
-  $CurrentWeathersTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'current_weathers';
   @override
-  String get $tableName => _alias ?? 'current_weathers';
-  @override
-  final String actualTableName = 'current_weathers';
+  String get actualTableName => 'current_weathers';
   @override
   VerificationContext validateIntegrity(Insertable<CurrentWeather> instance,
       {bool isInserting = false}) {
@@ -1999,8 +1794,8 @@ class $CurrentWeathersTable extends CurrentWeathers
   Set<GeneratedColumn> get $primaryKey => {placeId};
   @override
   CurrentWeather map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return CurrentWeather.fromData(data, _db, prefix: effectivePrefix);
+    return CurrentWeather.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override

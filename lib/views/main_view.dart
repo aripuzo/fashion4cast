@@ -847,9 +847,9 @@ class _MainState extends State<_MainView> {
   }
 
   _saveDeviceId() async{
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
-    if (status.subscriptionStatus.subscribed) {
-      var onesignalUserId = status.subscriptionStatus.userId;
+    var deviceState = await OneSignal.shared.getDeviceState();
+    if (deviceState.emailSubscribed) {
+      var onesignalUserId = deviceState.userId;
       _viewModel.addDevice(onesignalUserId);
     }
 

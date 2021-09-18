@@ -12,12 +12,15 @@ import 'package:loading/loading.dart';
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: Size(414, 896), allowFontScaling: true);
-    return MaterialApp(
-      theme: AppStyles.defaultTheme(),
-      debugShowCheckedModeBanner: false,
-      home: SplashView(),
-      onGenerateRoute: AppRoutes().getRoutes,
+    //ScreenUtil.init(designSize: Size(), allowFontScaling: true);
+    return ScreenUtilInit(
+        designSize: Size(414, 896),
+        builder: () => MaterialApp(
+          theme: AppStyles.defaultTheme(),
+          debugShowCheckedModeBanner: false,
+          home: SplashView(),
+          onGenerateRoute: AppRoutes().getRoutes,
+        ),
     );
   }
 }
