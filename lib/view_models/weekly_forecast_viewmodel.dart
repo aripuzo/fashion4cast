@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/databases/app_database.dart';
+import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/network/models/detail_weather_result.dart';
 import 'package:fashion4cast/repository/weather_repository.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class WeeklyForecastViewModel{
   }
 
   void refreshWeather(Place place){
-    _weatherRepository.loadWeather(placeId: place.external_id);
+    _weatherRepository.loadWeather(placeId: place.externalId);
   }
 
   void _listenRegisterResponse(){

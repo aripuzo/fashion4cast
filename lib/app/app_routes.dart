@@ -5,6 +5,7 @@ import 'package:fashion4cast/views/edit_profile_view.dart';
 import 'package:fashion4cast/views/forgot_password_view.dart';
 import 'package:fashion4cast/views/login_view.dart';
 import 'package:fashion4cast/views/main_view.dart';
+import 'package:fashion4cast/views/main_view2.dart';
 import 'package:fashion4cast/views/register_view.dart';
 import 'package:fashion4cast/views/reset_password_view.dart';
 import 'package:fashion4cast/views/select_locations_view.dart';
@@ -27,6 +28,7 @@ class AppRoutes{
   static const String APP_ROUTE_FORGOT_PASSWORD = "/forgot_password";
   static const String APP_ROUTE_RESET_PASSWORD = "/reset_password";
   static const String APP_ROUTE_MAIN = "/main";
+  static const String APP_ROUTE_MAIN2 = "/main2";
   static const String APP_ROUTE_WELCOME = "/welcome";
   static const String APP_ROUTE_COMPLETE = "/complete";
   static const String APP_ROUTE_WEEKLY_FORECAST = "/weekly_forecast";
@@ -100,6 +102,14 @@ class AppRoutes{
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) => Main(),
+          fullscreenDialog: true,
+        );
+      }
+
+      case APP_ROUTE_MAIN2 : {
+        return MaterialPageRoute<void>(
+          settings: routeSettings,
+          builder: (BuildContext context) => Main2(),
           fullscreenDialog: true,
         );
       }

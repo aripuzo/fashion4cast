@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/models/ad.dart';
+import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/models/product.dart';
 import 'package:fashion4cast/repository/ad_repository.dart';
 import 'package:fashion4cast/repository/product_repository.dart';
@@ -45,7 +45,6 @@ class WeeklySuggestionViewModel{
   }
 
   void refreshProducts(String condition){
-    //_weatherRepository.getDetailWeather(placeId: _place.external_id);
     _productRepository.loadProducts(condition);
   }
 

@@ -1,72 +1,69 @@
-import 'package:fashion4cast/databases/tables/weathers_table.dart';
+import 'dart:async';
+
+import 'package:fashion4cast/models/place.dart';
+import 'package:fashion4cast/models/place_with_weather.dart';
 import 'package:fashion4cast/models/temp_weather.dart';
-import 'package:moor/moor.dart';
 
-import '../app_database.dart';
+class WeatherDao {
+  StreamController<List<TempWeather>> _weatherController = StreamController<List<TempWeather>>.broadcast();
+  Stream<List<TempWeather>> get data => _weatherController.stream;
+  List<TempWeather> _weathers = [];
 
-part 'weather_dao.g.dart';
+  var _placeWeatherController = StreamController<List<PlaceWithWeather>>.broadcast();
+  Stream<List<PlaceWithWeather>> get placeWeatherData => _placeWeatherController.stream;
+  List<PlaceWithWeather> _placeWeathers = [];
 
-@UseDao(tables: [Weathers])
-class WeatherDao extends DatabaseAccessor<AppDatabase> with _$WeatherDaoMixin {
-  final AppDatabase db;
+  //-------------------------------------------------------------------- Singleton ----------------------------------------------------------------------
+  // Final static instance of class initialized by private constructor
+  static final WeatherDao _instance = WeatherDao._internal();
+  // Factory Constructor
+  factory WeatherDao()=> _instance;
 
-  // Called by the AppDatabase class
-  WeatherDao(this.db) : super(db);
+  /// AppPreference Private Internal Constructor -> AppPreference
+  /// @param->_
+  /// @usage-> Initialize SharedPreference object and notify when operation is complete to future variable.
+  WeatherDao._internal();
 
-  Future<List<Weather>> getProducts() => select(weathers).get();
 
-  Future<List<Weather>> getWeathers(int placeId) {
-    return (select(weathers)..where((t) => t.placeId.equals(placeId))).get();
+  void _dispatch() {
+    _weatherController.sink.add(_weathers);
+    _placeWeatherController.sink.add(_placeWeathers);
   }
 
-  Stream<List<Weather>> watchAllWeathers(int placeId) {
-    // where returns void, need to use the cascading operator
-    return (select(weathers)
-      ..orderBy(
-        ([
-          // Primary sorting by due date
-              (w) =>
-              OrderingTerm(expression: w.timestamp, mode: OrderingMode.asc),
-          // Secondary alphabetical sorting
-              //(t) => OrderingTerm(expression: t.day),
-        ]),
-      )
-      ..where((t) => t.placeId.equals(placeId)))
-        .watch();
+
+  void saveWeather(TempWeather weather) {
+    _weathers.add(weather);
+    _dispatch();
   }
 
-  Future insertWeather(Weather weather) => into(weathers).insert(weather);
-
-  Future updateWeather(Weather weather) => update(weathers).replace(weather);
-
-  Future deleteWeather(Weather weather) => delete(weathers).delete(weather);
-
-  Future<void> insertWeathers(List<TempWeather> qs, int placeId) async{
-    for(int i = 0; i < qs.length; i++){
-      var weather = qs[i].toWeather(placeId);
-      insertWeather(weather);
-    }
+  List<TempWeather> readData(){
+    return _weathers;
   }
 
-  Future<void> deleteAllWeathers(int placeId) async{
-    var places = await getWeathers(placeId);
-    if(places != null)
-    for(int i = 0; i < places.length; i++){
-      deleteWeather(places[i]);
-    }
+  void removeAll(){
+    _weathers.clear();
+    _dispatch();
   }
 
-  Future<void> deleteAllProducts() async{
-    var products = await getProducts();
-    if(products != null)
-      for(int i = 0; i < products.length; i++){
-        deleteWeather(products[i]);
+  void insert(TempWeather value, Place place) async {
+    bool exist = false;
+    for (int i = 0; i < _weathers.length; i++) {
+      if(value.id == _weathers[i].id) {
+        exist = true;
+        break;
       }
+    }
+    if(!exist) {
+      _weathers.add(value);
+      _placeWeathers.add(PlaceWithWeather(place, value));
+    }
+    _dispatch();
   }
 
-  Future<void> replaceWeathers(List<TempWeather> places, int placedId) async {
-    await deleteAllProducts();
-    await deleteAllWeathers(placedId);
-    await insertWeathers(places, placedId);
+  void dispose() {
+    _placeWeathers = null;
+    _weathers = null;
+    _weatherController.close();
+    _placeWeatherController.close();
   }
 }

@@ -1,7 +1,8 @@
 import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/app/app_routes.dart';
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
+import 'package:fashion4cast/models/place.dart';
+import 'package:fashion4cast/models/place_with_weather.dart';
 import 'package:fashion4cast/models/temp_weather.dart';
 import 'package:fashion4cast/resources/values/app_colors.dart';
 import 'package:fashion4cast/view_models/weekly_forecast_viewmodel.dart';
@@ -545,4 +546,10 @@ class ScreenArguments2 {
   final TempWeather weather;
 
   ScreenArguments2(this.place, this.weather);
+}
+
+class ScreenArguments3 {
+  final PlaceWithWeather weather;
+
+  ScreenArguments3(this.weather);
 }

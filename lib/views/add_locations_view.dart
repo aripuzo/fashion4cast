@@ -1,5 +1,5 @@
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/databases/app_database.dart';
+import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/resources/values/app_colors.dart';
 import 'package:fashion4cast/resources/values/text_styles.dart';
 import 'package:fashion4cast/view_models/add_location_viewmodel.dart';
@@ -217,7 +217,7 @@ class _AddLocationsState extends State<AddLocations> {
 
   Widget _locationListItem({@required Place item}) {
     return new InkWell(
-        onTap: () => _showAddDialog(item.external_id),
+        onTap: () => _showAddDialog(item.externalId),
         child: Container(
           height: ScreenUtil().setHeight(45),
           child: Row(

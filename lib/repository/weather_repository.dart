@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
-import 'package:fashion4cast/databases/dao/current_weather_dao.dart';
 import 'package:fashion4cast/models/alert.dart';
+import 'package:fashion4cast/models/place_with_weather.dart';
+import 'package:fashion4cast/models/temp_weather.dart';
 import 'package:fashion4cast/network/api.dart';
 import 'package:fashion4cast/network/models/detail_weather_result.dart';
 import 'package:meta/meta.dart';
@@ -19,13 +19,15 @@ class WeatherRepository {
 
   WeatherRepository._internal(this._appPreferences);
 
+  var weatherDao = App().getWeatherDao();
+
   void getCurrentWeather({@required String placeId}) async{
     Api.initialize().getWeatherCurrent(placeId).then((result) {
       if (result != null && result.data != null) {
-        var weatherDao = App().appDatabase.currentWeatherDao;
-        weatherDao.replaceWeather(result.data.weather, result.data.place.id);
+        weatherDao.insert(result.data.weather, result.data.place);
         if(result.data.weather.alert != null && result.data.weather.alert.isNotEmpty)
           _alertController.add(result.data.weather.alert);
+        //_hourlyController.add(result.data.hourly);
       }
     });
   }
@@ -46,11 +48,11 @@ class WeatherRepository {
   Stream<DetailWeather> getDetailWeather() => _placeWeatherController.stream;
 
   Stream<List<PlaceWithWeather>> getPlaceWithWeather() {
-    return App().appDatabase.currentWeatherDao.placeWithWeather();
+    return weatherDao.placeWeatherData;
   }
 
-  Stream<List<Weather>> getWeather(int placeId) {
-    return App().appDatabase.weatherDao.watchAllWeathers(placeId);
+  Stream<List<TempWeather>> getWeather(int placeId) {
+    return weatherDao.data;
   }
 
   Stream<List<Alert>> getAlerts() => _alertController.stream;

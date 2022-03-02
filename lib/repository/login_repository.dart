@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
+import 'package:fashion4cast/databases/dao/place_dao.dart';
 import 'package:fashion4cast/network/api.dart';
 import 'package:fashion4cast/resources/values/app_strings.dart';
 import 'package:meta/meta.dart';
@@ -38,10 +38,11 @@ class LoginRepository {
   }
 
   void loadMyPlaces(){
+    var placeDao = PlaceDao();
     Api.initialize().getMyPlaces()
         .then((result) {
       if (result != null && result.data.data.isNotEmpty) {
-        App().appDatabase.placeDao.replacePlaces(result.data.data);
+        placeDao.insertMore(result.data.data);
       }
     });
   }

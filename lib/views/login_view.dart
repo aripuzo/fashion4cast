@@ -176,61 +176,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-//                        SizedBox(
-//                          width: ScreenUtil().setWidth(19),
-//                          height: ScreenUtil().setHeight(19),
-//                          child: Stack(
-//                            children: <Widget>[
-//                              PositionedDirectional(
-//                                top: 0,
-//                                start: 0,
-//                                child:
-//                                Container(
-//                                    width: ScreenUtil().setWidth(19),
-//                                    height: ScreenUtil().setHeight(19),
-//                                    decoration: BoxDecoration(
-//                                        borderRadius: BorderRadius.all(
-//                                            Radius.circular(2)
-//                                        ),
-//                                        border: Border.all(
-//                                            color: AppColors.PRIMARY_COLOR,
-//                                            width: ScreenUtil().setWidth(1)
-//                                        )
-//                                    )
-//                                ),
-//                              ),
-//                              PositionedDirectional(
-//                                top: ScreenUtil().setHeight(4),
-//                                start: ScreenUtil().setWidth(4),
-//                                child:
-//                                Container(
-//                                    width: ScreenUtil().setWidth(11),
-//                                    height: ScreenUtil().setHeight(11),
-//                                    decoration: BoxDecoration(
-//                                        borderRadius: BorderRadius.all(
-//                                            Radius.circular(1.18999992966652)
-//                                        ),
-//                                        color: AppColors.PRIMARY_COLOR
-//                                    )
-//                                ),
-//                              ),
-//                            ],
-//                          ),
-//                        ),
-//                        SizedBox(
-//                          width: ScreenUtil().setWidth(20),
-//                        ),
-//                        Text(
-//                            "Keep me signed in",
-//                            style: TextStyle(
-//                                color:  Colors.white,
-//                                fontWeight: FontWeight.w400,
-//                                fontFamily: "HelveticaNeue",
-//                                fontStyle:  FontStyle.normal,
-//                                fontSize: ScreenUtil().setSp(14.0)
-//                            ),
-//                            textAlign: TextAlign.right
-//                        ),
                         Spacer(),
                         InkWell(
                           onTap: () {
@@ -268,7 +213,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           width: ScreenUtil().setWidth(355),
                           child:  Hero(
                             tag: "button",
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               child: Text(
                                   AppStrings.LOGIN_LOGIN_BUTTON_LABEL,
                                   style: TextStyle(
@@ -280,7 +225,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                   ),
                                   textAlign: TextAlign.center
                               ),
-                              animationDuration: Duration(seconds: 2),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(AppColors.PRIMARY_COLOR),
+                              ),
                               onPressed: () {
                                 if(EmailValidator.validate(_viewModel.userNameController
                                     .text) && _viewModel
@@ -382,7 +329,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             _isLoading = false;
             _stopAnimation();
             if(message == null){
-              //Navigator.pushReplacementNamed(context, AppRoutes.APP_ROUTE_MAIN);
               Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.APP_ROUTE_MAIN, (Route<dynamic> route) => false);
             } else {
               Fluttertoast.showToast(msg: message);

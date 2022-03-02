@@ -310,6 +310,11 @@ class Api {
         if(result != null)
           return result;
       }
+      else {
+        var result = PlaceResult(data: null, message: "Error connecting", errors: null);
+        if(result != null)
+          return result;
+      }
       return null;
     }
   }
@@ -344,6 +349,20 @@ class Api {
       Response response = await dio.get(NetworkEndpoints.WEATHER_API,
           queryParameters: {
             "place_id": placeId,
+            "payload": "detail"
+          });
+      return DetailWeatherResult.fromJson(response.data);
+    } on DioError {
+      return null;
+    }
+  }
+
+  Future<DetailWeatherResult> getWeatherCoordinate(double lat, double lng) async {
+    try {
+      Response response = await dio.get(NetworkEndpoints.WEATHER_API + "/coordinate",
+          queryParameters: {
+            "lat": lat,
+            "lng": lng,
             "payload": "detail"
           });
       return DetailWeatherResult.fromJson(response.data);

@@ -223,7 +223,7 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                           width: ScreenUtil().setWidth(355),
                           child:  Hero(
                             tag: "button",
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               child: Text(
                                   AppStrings.REGISTER_LOGIN_BUTTON_LABEL,
                                   style: TextStyle(
@@ -235,7 +235,9 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                                   ),
                                   textAlign: TextAlign.center
                               ),
-                              animationDuration: Duration(seconds: 2),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(AppColors.PRIMARY_COLOR),
+                              ),
                               onPressed: snapshot.data ?? false
                                   ?
                                   () {
@@ -303,22 +305,6 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
               ),
             ),
           ),
-//          PositionedDirectional(
-//            bottom: ScreenUtil().setHeight(30),
-//            start: ScreenUtil().setWidth(151),
-//            child:
-//            SizedBox(
-//                //height: ScreenUtil().setHeight(21),
-//                child: !_keyboardIsVisible() ?
-//                Text(
-//                    "Fashion4Cast",
-//                    style: smallLogoStyle,
-//                    textAlign: TextAlign.center
-//                )
-//                    :
-//                SizedBox()
-//            ),
-//          )
         ]),
       ),
     );

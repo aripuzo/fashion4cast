@@ -74,46 +74,51 @@ class _SettingsState extends State<Settings> {
                         ),
                         children: [
                         // Settings
-                        SizedBox(
-                          height: ScreenUtil().setHeight(60),
-                        ),
-                        HeaderItem(
-                          title: "Account details",
-                          image: "assets/images/person.png",
-                        ),
-                        _bodyItem(
-                          item: "Edit Profile",
-                          index: 0,
-                        ),
-                        _bodyItem(
-                            item: "Change Password",
-                          index: 1,
-                        ),
-                        HeaderItem(
-                          title: "Notifications",
-                          image: "assets/images/bell_ring_notification_alarm.png",
-                        ),
-                        _bodyItem(
-                          item: "App notifications",
-                          hasSwitch: true,
-                          index: 2,
-                        ),
-                        HeaderItem(
-                          title: "Others",
-                        ),
-                        _bodyItem(
-                          item: "Locations",
-                          index: 3,
-                        ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(60),
+                          ),
+                          HeaderItem(
+                            title: "Account details",
+                            image: "assets/images/person.png",
+                          ),
+                          _bodyItem(
+                            item: "Edit Profile",
+                            index: 0,
+                          ),
+                          _bodyItem(
+                              item: "Change Password",
+                            index: 1,
+                          ),
+                          // HeaderItem(
+                          //   title: "Notifications",
+                          //   image: "assets/images/bell_ring_notification_alarm.png",
+                          // ),
+                          // _bodyItem(
+                          //   item: "App notifications",
+                          //   hasSwitch: true,
+                          //   index: 2,
+                          // ),
+                          HeaderItem(
+                            title: "Others",
+                          ),
+                          _bodyItem(
+                            item: "Use Current Location",
+                            hasSwitch: true,
+                            index: 2,
+                          ),
+                          _bodyItem(
+                            item: "Locations",
+                            index: 3,
+                          ),
                           _bodyItem(
                             item: "Use fahrenheit",
                             hasSwitch: true,
                             index: 4,
                           ),
-                        _bodyItem(
-                          item: "Privacy Policy",
-                          index: 5,
-                        ),
+                          _bodyItem(
+                            item: "Privacy Policy",
+                            index: 5,
+                          ),
                       ]),
                     ),
                   ],
@@ -212,13 +217,13 @@ class _SettingsState extends State<Settings> {
             ),
             trailing: hasSwitch ?
             Switch(
-              value: index == 2 ? _viewModel.allowNot : _viewModel.useF,
+              value: index == 2 ? _viewModel.useCurrentLocation : _viewModel.useF,
               activeColor: AppColors.PRIMARY_COLOR,
               inactiveThumbColor: Colors.grey,
               onChanged: (changed) {
                 setState(() {
                   index == 2
-                      ? _viewModel.setAllowNotification(changed)
+                      ? _viewModel.setUseCurrentLocation(changed)
                       : _viewModel.setUseF(changed);
                 });
               },
@@ -245,31 +250,31 @@ class _SettingsState extends State<Settings> {
 
 
   Future<void> _showLogout() async {
-    // return showDialog<void>(
-    //   context: context,
-    //   barrierDismissible: false, // user must tap button!
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       title: Text('Logout'),
-    //       content: Text('Are you sure you want to logout?'),
-    //       actions: <Widget>[
-    //         FlatButton(
-    //           child: Text('Yes'),
-    //           onPressed: () {
-    //             _logOut();
-    //             Navigator.of(context).pop();
-    //           },
-    //         ),
-    //         FlatButton(
-    //           child: Text('No'),
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Yes'),
+              onPressed: () {
+                _logOut();
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<Null> _logOut() async {

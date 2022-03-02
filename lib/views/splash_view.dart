@@ -42,8 +42,6 @@ class SplashState extends State<SplashView>
   void handleTimeout()async {
 
     await App().getAppPreferences().isPreferenceReady;
-
-    App().appDatabase = await App().getAppDatabase();
 //
     var pref = App().getAppPreferences();
 

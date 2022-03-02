@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
+import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/models/user.dart';
 import 'package:fashion4cast/repository/location_repository.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,7 @@ class SettingsViewModel{
   var _myPlacesController = StreamController<List<Place>>.broadcast();
   bool useF;
   bool allowNot;
+  bool useCurrentLocation;
   StreamingSharedPreferences preferences;
 
   User user;
@@ -45,6 +46,7 @@ class SettingsViewModel{
   void _init() {
     useF = _appPreferences.useF();
     allowNot = _appPreferences.allowNotification();
+    useCurrentLocation = _appPreferences.useCurrentLocation();
 
     user = App().getAppPreferences().getUser();
   }
@@ -58,6 +60,11 @@ class SettingsViewModel{
   void setAllowNotification(bool val){
     _appPreferences.setAllowNotification(hasDevice: val);
     allowNot = val;
+  }
+
+  void setUseCurrentLocation(bool val){
+    _appPreferences.setUseCurrentLocation(hasDevice: val);
+    useCurrentLocation = val;
   }
 
   void logout() {

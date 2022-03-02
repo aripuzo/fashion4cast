@@ -1,6 +1,6 @@
 class NetworkEndpoints {
 
-  static const String _STAGING_BASE_URL = "https://fashion4cast.ajizzy.net";
+  static const String _STAGING_BASE_URL = "https://fashion4castapp.com";
   static const String _PRODUCTION_BASE_URL = "https://api.fashion4castapp.com";
   static const String BASE_API = (AppConstants.isDebug ? _STAGING_BASE_URL : _PRODUCTION_BASE_URL) + "/api/v1";
 
@@ -33,5 +33,5 @@ class NetworkEndpoints {
 }
 
 class AppConstants{
-  static const bool isDebug = false;
+  static const bool isDebug = true;
 }

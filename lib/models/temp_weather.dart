@@ -1,10 +1,10 @@
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'alert.dart';
 
 class TempWeather {
+  int id = 0;
   String summery;
   String icon;
   List<Alert> alert;
@@ -23,6 +23,8 @@ class TempWeather {
   bool isToday;
   int timestamp;
   String background;
+  String hour;
+  bool isCurrentHour;
 
   TempWeather({
     this.summery,
@@ -42,7 +44,9 @@ class TempWeather {
     this.isToday,
     this.windSpeed,
     this.timestamp,
-    this.background
+    this.background,
+    this.hour,
+    this.isCurrentHour,
   });
 
   factory TempWeather.fromJson(Map<String, dynamic> json){
@@ -52,15 +56,21 @@ class TempWeather {
       temperature: checkDouble(json["temperature"]),
       description: json["description"],
       windDirection: json["wind_direction"],
-      day: json["day"],
       date: json["date"],
-      isToday: json["is_today"],
     );
+    if(json.containsKey("is_today")){
+      temp.isToday = json["is_today"];
+    }
+    if(json.containsKey("day")){
+      temp.day = json["day"];
+    }
     if(json.containsKey("humidity")){
       temp.humidity = double.parse((json["humidity"].toDouble()).toStringAsFixed(2));
     }
     if(json.containsKey("pressure")) {
       temp.pressure = double.parse((json["pressure"].toDouble()).toStringAsFixed(2));
+    }
+    if(json.containsKey("pressure_daily")){
       temp.pressureDaily = json["pressure_daily"].toDouble();
     }
     if(json.containsKey("chance_of_rain"))
@@ -77,6 +87,10 @@ class TempWeather {
       temp.timestamp =  json["timestamp"].toInt();
     if(json.containsKey("background"))
       temp.background = json["background"];
+    if(json.containsKey("is_current_hour"))
+      temp.isCurrentHour = json["is_current_hour"];
+    if(json.containsKey("hour"))
+      temp.hour = json["hour"];
 //    if(json.containsKey("alert") && json["alert"] != null){
 //      temp.alert = List<Alert>.from(json["alert"].map((x) => x));
 //    }
@@ -117,43 +131,43 @@ class TempWeather {
     }
   }
 
-  Weather toWeather(int placeId){
-    return Weather(
-      id: "$placeId$day",
-      placeId: placeId,
-      summery: summery,
-      icon: icon,
-      description: description,
-      min_temp: minTemp,
-      max_temp: maxTemp,
-      day: day,
-      date: date,
-      is_today: isToday,
-      timestamp: timestamp
-    );
-  }
-
-  CurrentWeather toCurrentWeather(int placeId){
-    return CurrentWeather(
-      placeId: placeId,
-      summery: summery,
-      icon: icon,
-      pressure: pressure,
-      temperature: temperature,
-      description: description,
-      humidity: humidity,
-      chance_of_rain: chanceOfRain,
-      wind_direction: windDirection,
-      pressure_daily: pressureDaily,
-      min_temp: minTemp,
-      max_temp: maxTemp,
-      day: day,
-      date: date,
-      is_today: isToday,
-      wind_speed: windSpeed,
-      background: background
-    );
-  }
+  // Weather toWeather(int placeId){
+  //   return Weather(
+  //     id: "$placeId$day",
+  //     placeId: placeId,
+  //     summery: summery,
+  //     icon: icon,
+  //     description: description,
+  //     min_temp: minTemp,
+  //     max_temp: maxTemp,
+  //     day: day,
+  //     date: date,
+  //     is_today: isToday,
+  //     timestamp: timestamp
+  //   );
+  // }
+  //
+  // CurrentWeather toCurrentWeather(int placeId){
+  //   return CurrentWeather(
+  //     placeId: placeId,
+  //     summery: summery,
+  //     icon: icon,
+  //     pressure: pressure,
+  //     temperature: temperature,
+  //     description: description,
+  //     humidity: humidity,
+  //     chance_of_rain: chanceOfRain,
+  //     wind_direction: windDirection,
+  //     pressure_daily: pressureDaily,
+  //     min_temp: minTemp,
+  //     max_temp: maxTemp,
+  //     day: day,
+  //     date: date,
+  //     is_today: isToday,
+  //     wind_speed: windSpeed,
+  //     background: background
+  //   );
+  // }
 
   static IconData getWeatherIcon(String s){
     // switch(s){

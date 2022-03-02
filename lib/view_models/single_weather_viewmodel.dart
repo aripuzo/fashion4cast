@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/databases/dao/current_weather_dao.dart';
 import 'package:fashion4cast/models/alert.dart';
+import 'package:fashion4cast/models/place_with_weather.dart';
 import 'package:fashion4cast/repository/weather_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 class SingleWeatherViewModel{
 

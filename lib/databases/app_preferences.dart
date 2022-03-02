@@ -25,6 +25,7 @@ class AppPreferences{
   static const String PREF_HAS_DEVICE = "HAS_DEVICE";
   static const String PREF_USE_F = "USE_F";
   static const String PREF_ALLOW_NOTIFICATION = "ALLOW_NOTIFICATION";
+  static const String PREF_USE_CURRENT_LOCATION = "USE_CURRENT_LOCATION";
 
   //-------------------------------------------------------------------- Variables -------------------------------------------------------------------
   // Future variable to check SharedPreference Instance is ready
@@ -95,6 +96,10 @@ class AppPreferences{
   void setAllowNotification({@required bool hasDevice}) => _setPreference(prefName: PREF_ALLOW_NOTIFICATION, prefValue: hasDevice, prefType: PREF_TYPE_BOOL);
 
   bool allowNotification() => _getPreferenceNow(prefName: PREF_ALLOW_NOTIFICATION) ?? true;
+
+  void setUseCurrentLocation({@required bool hasDevice}) => _setPreference(prefName: PREF_USE_CURRENT_LOCATION, prefValue: hasDevice, prefType: PREF_TYPE_BOOL);
+
+  bool useCurrentLocation() => _getPreferenceNow(prefName: PREF_USE_CURRENT_LOCATION) ?? true;
 
   Future<bool> logout() {
     return _preferences.clear();
