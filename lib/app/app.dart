@@ -1,7 +1,4 @@
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
-import 'package:fashion4cast/databases/dao/place_dao.dart';
-import 'package:fashion4cast/databases/dao/weather_dao.dart';
 import 'package:fashion4cast/repository/ad_repository.dart';
 import 'package:fashion4cast/repository/forgot_password_repository.dart';
 import 'package:fashion4cast/repository/location_repository.dart';
@@ -11,10 +8,12 @@ import 'package:fashion4cast/repository/register_repository.dart';
 import 'package:fashion4cast/repository/reset_password_repository.dart';
 import 'package:fashion4cast/repository/user_repository.dart';
 import 'package:fashion4cast/repository/weather_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
+import '../databases/app_database.dart';
+import '../databases/dao/place_dao.dart';
+import '../databases/dao/weather_dao.dart';
 import 'app_routes.dart';
 
 /// App Class -> Application Class
@@ -35,7 +34,7 @@ class App extends StatelessWidget {
 
   bool _requireConsent = true;
 
-//  AppDatabase appDatabase;
+  MyDatabase appDatabase;
 
   //------------------------------------------------------------ Widget Methods --------------------------------------------------------------------
 
@@ -67,10 +66,6 @@ class App extends StatelessWidget {
     return AppPreferences();
   }
 
-  WeatherDao getWeatherDao(){
-    return WeatherDao();
-  }
-
   void logout() {
     var _appPreferences = getAppPreferences();
     _appPreferences.setLoggedIn(isLoggedIn: false);
@@ -80,10 +75,23 @@ class App extends StatelessWidget {
     //PlaceDao().removeAll();
   }
 
-//  Future<AppDatabase> getAppDatabase() async {
-//    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-//    return database;
-//  }
+  final database = MyDatabase();
+
+  WeatherDao weatherDao;
+
+  MyDatabase getAppDatabase() {
+    return database;
+  }
+
+  WeatherDao getWeatherDao(){
+    if (weatherDao == null)
+      weatherDao = WeatherDao(database);
+    return weatherDao;
+  }
+
+  PlaceDao getPlaceDao(){
+    return PlaceDao(database);
+  }
 //
   /// Get Login Repository Method -> LoginRepository
   /// @param -> appPreferences -> AppPreferences

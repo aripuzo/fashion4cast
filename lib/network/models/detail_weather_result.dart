@@ -1,5 +1,6 @@
-import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/models/temp_weather.dart';
+
+import '../../databases/app_database.dart';
 
 class DetailWeatherResult {
   DetailWeather data;

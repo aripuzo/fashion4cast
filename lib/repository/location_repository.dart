@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
+import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
-import 'package:fashion4cast/databases/dao/place_dao.dart';
-import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/models/temp_weather.dart';
 import 'package:fashion4cast/network/api.dart';
 import 'package:meta/meta.dart';
+
 
 class LocationRepository {
 
@@ -14,11 +14,9 @@ class LocationRepository {
   var _placesErrorObserver = StreamController<String>.broadcast();
   var _logoutErrorObserver = StreamController<bool>.broadcast();
   var _locationEmptyObserver = StreamController<bool>.broadcast();
-  var _hourlyController = StreamController<List<TempWeather>>.broadcast();
-  var _historyController = StreamController<List<TempWeather>>.broadcast();
 
   AppPreferences _appPreferences;
-  var placeDao = PlaceDao();
+  var placeDao = App().getPlaceDao();
   var weatherDao = App().getWeatherDao();
   factory LocationRepository({@required AppPreferences appPreferences})=> LocationRepository._internal(appPreferences);
 
@@ -30,13 +28,13 @@ class LocationRepository {
       if (result != null && result.data != null) {
         placeDao.getPlace(result.data.id).then((value) => {
           if(value != null)
-            placeDao.update(result.data)
+            placeDao.updatePlace(result.data)
           else
-            placeDao.insert(result.data)
+            placeDao.updatePlace(result.data)
         });
         _placesErrorObserver.add(null);
         placeDao.getPlaces().then((value) => (value.length <= 1) ? setDefaultPlace(result.data.id) : null);
-        getCurrentWeather(placeId: result.data.externalId);
+        getCurrentWeather(placeId: result.data.external_id);
       } else {
         String message;
         if(result != null && (message == null || message.isEmpty))
@@ -52,13 +50,15 @@ class LocationRepository {
   void getCurrentWeather({@required String placeId}) async{
     Api.initialize().getWeatherDetail(placeId).then((result) {
       if (result != null && result.data != null) {
-        if(!_appPreferences.useCurrentLocation()) {
-          for (int i = 0; i < result.data.weather.length; i++) {
-            if (result.data.weather[i].isToday)
-              weatherDao.insert(result.data.weather[i], result.data.place);
-          }
-          _hourlyController.add(result.data.hourly);
-          _historyController.add(result.data.weather);
+        TempWeather tempWeather;
+        for (int i = 0; i < result.data.weather.length; i++) {
+          if (result.data.weather[i].isToday)
+            tempWeather = result.data.weather[i];
+        }
+        if(tempWeather != null) {
+          tempWeather.hourly = result.data.hourly;
+          tempWeather.history = result.data.weather;
+          weatherDao.insert(tempWeather, result.data.place);
         }
       }
     });
@@ -67,15 +67,18 @@ class LocationRepository {
   void getWeatherCoordinate({@required double lat, @required double lng}) async{
     Api.initialize().getWeatherCoordinate(lat, lng).then((result) {
       if (result != null && result.data != null) {
-        //var weatherDao = App().appDatabase.currentWeatherDao;
+        TempWeather tempWeather;
         for (int i = 0; i < result.data.weather.length; i++){
           if (result.data.weather[i].isToday) {
-            weatherDao.insert(result.data.weather[i], result.data.place);
-            placeDao.insert(result.data.place);
+            tempWeather = result.data.weather[i];
+            placeDao.updatePlace(result.data.place);
           }
         }
-        _hourlyController.add(result.data.hourly);
-        _historyController.add(result.data.weather);
+        if(tempWeather != null) {
+          tempWeather.hourly = result.data.hourly;
+          tempWeather.history = result.data.weather;
+          weatherDao.insert(tempWeather, result.data.place);
+        }
       }
     });
   }
@@ -100,7 +103,7 @@ class LocationRepository {
         if(result.data.data.isNotEmpty) {
           placeDao.insertMore(result.data.data);
           for (int i = 0; i < result.data.data.length; i++)
-            getCurrentWeather(placeId: result.data.data[i].externalId);
+            getCurrentWeather(placeId: result.data.data[i].external_id);
         }
         else
           _locationEmptyObserver.add(true);
@@ -124,9 +127,5 @@ class LocationRepository {
   Stream<bool> getLogoutError() => _logoutErrorObserver.stream;
 
   Stream<bool> getEmptyLocationError() =>_locationEmptyObserver.stream;
-
-  Stream<List<TempWeather>> getHourly() => _hourlyController.stream;
-
-  Stream<List<TempWeather>> getHistory() => _historyController.stream;
 
 }

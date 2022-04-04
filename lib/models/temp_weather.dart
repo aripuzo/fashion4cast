@@ -25,6 +25,12 @@ class TempWeather {
   String background;
   String hour;
   bool isCurrentHour;
+  String externalId;
+
+  bool isLocal = false;
+
+  List<TempWeather> hourly = [];
+  List<TempWeather> history = [];
 
   TempWeather({
     this.summery,
@@ -47,6 +53,7 @@ class TempWeather {
     this.background,
     this.hour,
     this.isCurrentHour,
+    this.externalId
   });
 
   factory TempWeather.fromJson(Map<String, dynamic> json){
@@ -91,6 +98,8 @@ class TempWeather {
       temp.isCurrentHour = json["is_current_hour"];
     if(json.containsKey("hour"))
       temp.hour = json["hour"];
+    if(json.containsKey("external_id"))
+      temp.externalId = json["external_id"];
 //    if(json.containsKey("alert") && json["alert"] != null){
 //      temp.alert = List<Alert>.from(json["alert"].map((x) => x));
 //    }
@@ -116,7 +125,8 @@ class TempWeather {
     "is_today": isToday,
     "wind_speed": windSpeed,
     "timestamp": timestamp,
-    "background": background
+    "background": background,
+    "external_id": externalId
   };
 
   static double checkDouble(dynamic value) {

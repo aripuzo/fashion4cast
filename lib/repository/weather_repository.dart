@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
 import 'package:fashion4cast/models/alert.dart';
 import 'package:fashion4cast/models/place_with_weather.dart';
@@ -9,17 +8,18 @@ import 'package:fashion4cast/network/api.dart';
 import 'package:fashion4cast/network/models/detail_weather_result.dart';
 import 'package:meta/meta.dart';
 
+import '../app/app.dart';
+
 class WeatherRepository {
 
   AppPreferences _appPreferences;
+  var weatherDao = App().getWeatherDao();
   var _alertController = StreamController<List<Alert>>.broadcast();
   var _placeWeatherController = StreamController<DetailWeather>.broadcast();
   var _placeWeatherErrorController = StreamController<bool>.broadcast();
   factory WeatherRepository({@required AppPreferences appPreferences})=> WeatherRepository._internal(appPreferences);
 
   WeatherRepository._internal(this._appPreferences);
-
-  var weatherDao = App().getWeatherDao();
 
   void getCurrentWeather({@required String placeId}) async{
     Api.initialize().getWeatherCurrent(placeId).then((result) {

@@ -13,8 +13,9 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:intl/intl.dart';
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'dart:ui';
+
+import 'package:url_launcher/url_launcher.dart';
 
 class Main2 extends StatelessWidget {
   @override
@@ -98,11 +99,6 @@ class _MainState2 extends State<_MainView2> {
               height: ScreenUtil.defaultSize.height,
             ),
           ),
-          Container(
-              height: ScreenUtil.defaultSize.height,
-              width: ScreenUtil.defaultSize.width,
-              color: AppColors.BACKGROUND_COLOR.withOpacity(0.3)
-          ),
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -116,6 +112,9 @@ class _MainState2 extends State<_MainView2> {
                   },
                 ),
               ],
+              leading: IconButton(icon:Icon(Icons.arrow_back),
+                onPressed:() => Navigator.pop(context, false),
+              ),
             ),
             body: OfflineBuilder(
               connectivityBuilder: (
@@ -454,6 +453,7 @@ class _MainState2 extends State<_MainView2> {
                       SizedBox(height: ScreenUtil().setHeight(13)),
                       InkWell(
                         onTap: () {
+                          _launchURL("http://wourivice.com");
                         },
                         child: Container(
                             margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(30.0)),
@@ -534,31 +534,6 @@ class _MainState2 extends State<_MainView2> {
                                 ),
                               )
                             ])
-                        ),
-                      ),
-                      SizedBox(height: ScreenUtil().setHeight(20)),
-                      InkWell(
-                        onTap: () {
-                        },
-                        child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(30.0)),
-                            height: ScreenUtil().setHeight(20),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset("assets/images/more.png"),
-                                  SizedBox(width: ScreenUtil().setWidth(16)),
-                                  Text("MORE",
-                                      style: TextStyle(
-                                        fontFamily: 'HelveticaNeue',
-                                        color: Colors.white,
-                                        fontSize: ScreenUtil().setSp(10),
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                      )
-                                  )
-                                ])
                         ),
                       ),
                       SizedBox(height: ScreenUtil().setHeight(70))
@@ -650,5 +625,9 @@ class _MainState2 extends State<_MainView2> {
         );
       }),
     );
+  }
+
+  void _launchURL(String url) async {
+    if (!await launch(url)) throw 'Could not launch $url';
   }
 }

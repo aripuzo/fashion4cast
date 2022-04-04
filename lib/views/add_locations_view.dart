@@ -1,5 +1,4 @@
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/resources/values/app_colors.dart';
 import 'package:fashion4cast/resources/values/text_styles.dart';
 import 'package:fashion4cast/view_models/add_location_viewmodel.dart';
@@ -9,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
+
+import '../databases/app_database.dart';
 
 class AddLocations extends StatefulWidget {
   @override
@@ -217,7 +218,7 @@ class _AddLocationsState extends State<AddLocations> {
 
   Widget _locationListItem({@required Place item}) {
     return new InkWell(
-        onTap: () => _showAddDialog(item.externalId),
+        onTap: () => _showAddDialog(item.external_id),
         child: Container(
           height: ScreenUtil().setHeight(45),
           child: Row(

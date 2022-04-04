@@ -45,12 +45,12 @@ class SingleWeatherViewModel{
   }
 
   void _listenRegisterResponse(){
-    _weatherRepository.getPlaceWithWeather()
-        .listen(
-            (places){
-          _myPlacesController.add(places);
-        }
-    );
+    // _weatherRepository.getPlaceWithWeather()
+    //     .listen(
+    //         (places){
+    //       _myPlacesController.add(places);
+    //     }
+    // );
 
     _weatherRepository.getAlerts()
         .listen(

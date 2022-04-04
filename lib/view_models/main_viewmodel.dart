@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/models/alert.dart';
 import 'package:fashion4cast/models/place_with_weather.dart';
-import 'package:fashion4cast/models/temp_weather.dart';
 import 'package:fashion4cast/repository/location_repository.dart';
 import 'package:fashion4cast/repository/user_repository.dart';
 import 'package:fashion4cast/repository/weather_repository.dart';
@@ -24,8 +23,6 @@ class MainViewModel{
   var _alertController = StreamController<List<Alert>>.broadcast();
   var _logoutController = StreamController<bool>.broadcast();
   var _emptyLocationController = StreamController<bool>.broadcast();
-  var _hourlyController = StreamController<List<TempWeather>>.broadcast();
-  var _historyController = StreamController<List<TempWeather>>.broadcast();
 
   bool done = false;
 
@@ -97,19 +94,6 @@ class MainViewModel{
         }
     );
 
-    _placeRepository.getHourly()
-        .listen(
-            (alerts){
-          _hourlyController.add(alerts);
-        }
-    );
-
-    _placeRepository.getHistory()
-        .listen(
-            (alerts){
-          _historyController.add(alerts);
-        }
-    );
   }
 
   Stream<List<PlaceWithWeather>> getCurrentWeathers() => _myPlacesController.stream;
@@ -119,10 +103,6 @@ class MainViewModel{
   Stream<bool> getEmptyLocation() => _emptyLocationController.stream;
 
   Stream<List<Alert>> getAlerts() => _alertController.stream;
-
-  Stream<List<TempWeather>> getHourly() => _hourlyController.stream;
-
-  Stream<List<TempWeather>> getHistory() => _historyController.stream;
 
   //Preference<bool> getUseF() => _preferences.getBool(AppPreferences.PREF_USE_F, defaultValue: true);
 

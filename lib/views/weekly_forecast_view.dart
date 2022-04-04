@@ -1,7 +1,6 @@
 import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/app/app_routes.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
-import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/models/place_with_weather.dart';
 import 'package:fashion4cast/models/temp_weather.dart';
 import 'package:fashion4cast/resources/values/app_colors.dart';
@@ -11,6 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+
+import '../databases/app_database.dart';
 
 class WeeklyForecast extends StatelessWidget {
   @override
@@ -51,6 +52,8 @@ class _WeeklyForecastState extends State<_WeeklyForecastView> {
     _isloading = true;
     _viewModel.refreshWeather(widget.place);
     _subscribeToViewModel();
+
+    print(widget.place.id);
 
     super.initState();
   }
@@ -133,103 +136,6 @@ class _WeeklyForecastState extends State<_WeeklyForecastView> {
                         ),
                       ),
                     ),
-                    // SizedBox(height: ScreenUtil().setHeight(26)),
-                    // Container(
-                    //     width: ScreenUtil().setWidth(354),
-                    //     height: ScreenUtil().setHeight(205),
-                    //     padding: EdgeInsets.all(ScreenUtil().setWidth(16)),
-                    //     decoration: new BoxDecoration(
-                    //         color: Colors.white.withOpacity(0.1499999910593033),
-                    //         borderRadius: BorderRadius.circular(4)
-                    //     ),
-                    //   child: Stack(
-                    //     children: <Widget>[
-                    //       PositionedDirectional(
-                    //         start: 0,
-                    //         top: 0,
-                    //         child: SizedBox(
-                    //             width: ScreenUtil().setWidth(130),
-                    //             height: ScreenUtil().setHeight(130),
-                    //             child: CachedNetworkImage(
-                    //               placeholder: (context, url) =>
-                    //                 Center(
-                    //                   child: Loading(indicator: BallSpinFadeLoaderIndicator(), size: 36.0, color: AppColors.PRIMARY_COLOR)
-                    //               ),
-                    //               imageUrl: _highligted != null ? _highligted.thumbnail : "",
-                    //               fit: BoxFit.fitHeight,
-                    //             ),
-                    //         ),
-                    //       ),
-                    //       PositionedDirectional(
-                    //         start: 0,
-                    //         bottom: 0,
-                    //         child: SizedBox(
-                    //             width: ScreenUtil().setWidth(130),
-                    //             height: ScreenUtil().setHeight(35),
-                    //             child:  RaisedButton(
-                    //               child: Text(
-                    //                   "Buy now",
-                    //                   style: TextStyle(
-                    //                       color:  Colors.black,
-                    //                       fontWeight: FontWeight.w700,
-                    //                       fontFamily: "HelveticaNeue",
-                    //                       fontStyle:  FontStyle.normal,
-                    //                       fontSize: ScreenUtil().setSp(12.0)
-                    //                   ),
-                    //                   textAlign: TextAlign.center
-                    //               ),
-                    //               onPressed: _highligted != null
-                    //                   ?
-                    //                   () {
-                    //                 _launchURL(context, _highligted.url);
-                    //               }
-                    //                   :
-                    //               null,
-                    //             )
-                    //         ),
-                    //       ),
-                    //       PositionedDirectional(
-                    //         top: ScreenUtil().setHeight(31),
-                    //         end: ScreenUtil().setWidth(7),
-                    //         child:
-                    //         SizedBox(
-                    //             width: ScreenUtil().setWidth(161),
-                    //             height: ScreenUtil().setHeight(136),
-                    //             child:   Text(
-                    //                 _highligted != null ? _highligted.description : "",
-                    //                 style: TextStyle(
-                    //                     color:  Colors.white,
-                    //                     fontWeight: FontWeight.w400,
-                    //                     fontFamily: "HelveticaNeue",
-                    //                     fontStyle:  FontStyle.normal,
-                    //                     fontSize: ScreenUtil().setSp(13.0
-                    //                 )
-                    //               )
-                    //             ),
-                    //         ),
-                    //       ),
-                    //       PositionedDirectional(
-                    //         top: ScreenUtil().setHeight(3),
-                    //         start: ScreenUtil().setSp(156),
-                    //         child:
-                    //         SizedBox(
-                    //             //width: ScreenUtil().setWidth(49),
-                    //             height: ScreenUtil().setHeight(21),
-                    //             child:   Text(
-                    //                 _highligted != null ? _highligted.title : "Today",
-                    //                 style: TextStyle(
-                    //                     color:  AppColors.PRIMARY_COLOR,
-                    //                     fontWeight: FontWeight.w700,
-                    //                     fontFamily: "HelveticaNeue",
-                    //                     fontStyle:  FontStyle.normal,
-                    //                     fontSize: ScreenUtil().setSp(11.0)
-                    //                 )
-                    //             )
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                     SizedBox(height: 26),
                     Row(
                       children: <Widget>[
@@ -485,15 +391,15 @@ class _WeeklyForecastState extends State<_WeeklyForecastView> {
   Widget _suggestionListItem(String item) {
     return new GestureDetector(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            AppRoutes.APP_ROUTE_WEEKLY_SUGGESTION,
-            arguments: ScreenArguments(
-              widget.place,
-              _getCondition(item),
-              _weathers
-            ),
-          );
+          // Navigator.pushNamed(
+          //   context,
+          //   AppRoutes.APP_ROUTE_WEEKLY_SUGGESTION,
+          //   arguments: ScreenArguments(
+          //     widget.place,
+          //     _getCondition(item),
+          //     _weathers
+          //   ),
+          // );
         },
         child: Container(
           width: ScreenUtil().setWidth(174),

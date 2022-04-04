@@ -1,36 +1,55 @@
 import 'dart:io';
+import 'package:drift/native.dart';
+import 'package:drift/drift.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
+import 'dao/place_dao.dart';
+import 'dao/weather_dao.dart';
 
-// import 'package:fashion4cast/databases/dao/current_weather_dao.dart';
-// import 'package:fashion4cast/databases/dao/weather_dao.dart';
-// import 'package:fashion4cast/databases/tables/current_weather_table.dart';
-// import 'package:fashion4cast/databases/tables/places_table.dart';
-// import 'package:fashion4cast/databases/tables/weathers_table.dart';
-// import 'package:moor/ffi.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:path/path.dart' as p;
-// import 'package:moor/moor.dart';
-// import 'dao/place_dao.dart';// the generated code will be there
-//
-// LazyDatabase _openConnection() {
-//   // the LazyDatabase util lets us find the right location for the file async.
-//   return LazyDatabase(() async {
-//     // put the database file, called db.sqlite here, into the documents folder
-//     // for your app.
-//     final dbFolder = await getApplicationDocumentsDirectory();
-//     final file = File(p.join(dbFolder.path, 'db.sqlite'));
-//     return VmDatabase(file, logStatements: true);
-//     return VmDatabase(file);
-//   });
-// }
-//
-// @UseMoor(tables: [Places, Weathers, CurrentWeathers],
-//     daos: [PlaceDao, WeatherDao, CurrentWeatherDao])
-// class AppDatabase extends _$AppDatabase {
-//   // we tell the database where to store the data with this constructor
-//   AppDatabase() : super(_openConnection());
-//
-//   // you should bump this number whenever you change or add a table definition. Migrations
-//   // are covered later in this readme.
-//   @override
-//   int get schemaVersion => 1;
-// }
+part 'app_database.g.dart';
+
+class Places extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text().withLength(min: 1, max: 32)();
+  TextColumn get description => text().nullable()();
+  RealColumn get lat => real()();
+  RealColumn get lng => real()();
+  TextColumn get external_id => text()();
+  TextColumn get body => text().named('map').nullable()();
+}
+
+class Weathers extends Table {
+
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get day => text().nullable()();
+  RealColumn get minTemp => real().nullable()();
+  RealColumn get maxTemp => real().nullable()();
+  TextColumn get date => text().nullable()();
+  TextColumn get icon => text().nullable()();
+  TextColumn get timestamp => text().nullable()();
+  BoolColumn get isToday => boolean().nullable()();
+}
+
+LazyDatabase _openConnection() {
+  // the LazyDatabase util lets us find the right location for the file async.
+  return LazyDatabase(() async {
+    // put the database file, called db.sqlite here, into the documents folder
+    // for your app.
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+    return NativeDatabase(file);
+  });
+}
+
+// this annotation tells drift to prepare a database class that uses both of the
+// tables we just defined. We'll see how to use that database class in a moment.
+@DriftDatabase(tables: [Places, Weathers], daos: [PlaceDao, WeatherDao])
+class MyDatabase extends _$MyDatabase {
+  //MyDatabase(QueryExecutor e) : super(e);
+
+  MyDatabase() : super(_openConnection());
+
+
+  @override
+  int get schemaVersion => 3;
+}

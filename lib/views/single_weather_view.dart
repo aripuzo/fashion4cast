@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
@@ -41,6 +43,12 @@ class _SingleWeatherState extends State<_SingleWeatherView> {
 
   String _bgImage;
 
+  var safeWidth;
+
+  var safeHeight;
+
+  var physicalScreenSize = window.physicalSize;
+
   @override
   void initState() {
 
@@ -55,6 +63,17 @@ class _SingleWeatherState extends State<_SingleWeatherView> {
     formattedDate = widget.args.weather.date;
 
     _bgImage = widget.args.weather.background;
+
+    var logicalScreenSize = window.physicalSize / window.devicePixelRatio;
+
+    var paddingLeft = window.padding.left / window.devicePixelRatio;
+    var paddingRight = window.padding.right / window.devicePixelRatio;
+    var paddingTop = window.padding.top / window.devicePixelRatio;
+    var paddingBottom = window.padding.bottom / window.devicePixelRatio;
+
+//Safe area in logical pixels
+    safeWidth = logicalScreenSize.width - paddingLeft - paddingRight;
+    safeHeight = logicalScreenSize.height - paddingTop - paddingBottom;
 
     super.initState();
   }
@@ -78,8 +97,8 @@ class _SingleWeatherState extends State<_SingleWeatherView> {
             child: widget.args.weather == null || widget.args.weather == null || _bgImage == null ?
             Image.asset(
               'assets/images/weather_bg.png',
-              width: ScreenUtil.defaultSize.width,
-              height: ScreenUtil.defaultSize.height,
+              width: safeWidth,
+              height: safeHeight,
               fit: BoxFit.fill,
             )
                 :
@@ -93,14 +112,9 @@ class _SingleWeatherState extends State<_SingleWeatherView> {
               fadeInCurve: Curves.easeInOutSine,
               imageUrl: _bgImage,
               fit: BoxFit.fill,
-              width: ScreenUtil.defaultSize.width,
-              height: ScreenUtil.defaultSize.height,
+              width: safeWidth,
+              height: safeHeight,
             ),
-          ),
-          Container(
-              height: ScreenUtil.defaultSize.height,
-              width: ScreenUtil.defaultSize.width,
-              color: AppColors.BACKGROUND_COLOR.withOpacity(0.3)
           ),
           Scaffold(
             backgroundColor: Colors.transparent,

@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/models/place.dart';
 import 'package:fashion4cast/repository/location_repository.dart';
 import 'package:flutter/material.dart';
+
+import '../databases/app_database.dart';
 
 class SelectLocationViewModel{
 

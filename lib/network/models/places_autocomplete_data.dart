@@ -1,4 +1,4 @@
-import 'package:fashion4cast/models/place.dart';
+import '../../databases/app_database.dart';
 
 class PlaceAutoCompleteData {
   List<Place> data;

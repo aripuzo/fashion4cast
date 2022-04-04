@@ -1,10 +1,19 @@
 import 'dart:async';
 
-import 'package:fashion4cast/models/place.dart';
+import 'package:drift/drift.dart';
 import 'package:fashion4cast/models/place_with_weather.dart';
 import 'package:fashion4cast/models/temp_weather.dart';
 
-class WeatherDao {
+import '../app_database.dart';
+
+part 'weather_dao.g.dart';
+
+@DriftAccessor(tables: [Weathers])
+class WeatherDao extends DatabaseAccessor<MyDatabase> with _$WeatherDaoMixin {
+  // this constructor is required so that the main database can create an instance
+  // of this object.
+  WeatherDao(MyDatabase db) : super(db);
+
   StreamController<List<TempWeather>> _weatherController = StreamController<List<TempWeather>>.broadcast();
   Stream<List<TempWeather>> get data => _weatherController.stream;
   List<TempWeather> _weathers = [];
@@ -12,17 +21,6 @@ class WeatherDao {
   var _placeWeatherController = StreamController<List<PlaceWithWeather>>.broadcast();
   Stream<List<PlaceWithWeather>> get placeWeatherData => _placeWeatherController.stream;
   List<PlaceWithWeather> _placeWeathers = [];
-
-  //-------------------------------------------------------------------- Singleton ----------------------------------------------------------------------
-  // Final static instance of class initialized by private constructor
-  static final WeatherDao _instance = WeatherDao._internal();
-  // Factory Constructor
-  factory WeatherDao()=> _instance;
-
-  /// AppPreference Private Internal Constructor -> AppPreference
-  /// @param->_
-  /// @usage-> Initialize SharedPreference object and notify when operation is complete to future variable.
-  WeatherDao._internal();
 
 
   void _dispatch() {
@@ -48,12 +46,12 @@ class WeatherDao {
   void insert(TempWeather value, Place place) async {
     bool exist = false;
     for (int i = 0; i < _weathers.length; i++) {
-      if(value.id == _weathers[i].id) {
+      if(value.externalId == _weathers[i].externalId) {
         exist = true;
         break;
       }
     }
-    if(!exist) {
+    if(true) {
       _weathers.add(value);
       _placeWeathers.add(PlaceWithWeather(place, value));
     }

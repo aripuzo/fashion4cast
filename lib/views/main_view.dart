@@ -20,6 +20,7 @@ import 'package:loading/indicator/ball_spin_fade_loader_indicator.dart';
 import 'package:loading/loading.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui';
 
 import 'weekly_forecast_view.dart';
@@ -52,8 +53,6 @@ class _MainState extends State<_MainView> {
 
   List<PlaceWithWeather> _trans = [];
   List<Alert> _alert = [];
-  List<TempWeather> _hourly = [];
-  List<TempWeather> _history = [];
 
   String formattedDate;
 
@@ -130,6 +129,10 @@ class _MainState extends State<_MainView> {
     }
   }
 
+  void _launchURL(String url) async {
+    if (!await launch(url)) throw 'Could not launch $url';
+  }
+
   _scrollListener() {
     // if (_controller.offset >= _controller.position.maxScrollExtent &&
     //     !_controller.position.outOfRange) {
@@ -174,7 +177,8 @@ class _MainState extends State<_MainView> {
           Container(
               height: safeHeight,
               width: safeWidth,
-              color: AppColors.BACKGROUND_COLOR.withOpacity(0.3)),
+              color: AppColors.BACKGROUND_COLOR.withOpacity(0.3)
+          ),
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -412,7 +416,7 @@ class _MainState extends State<_MainView> {
                                     //_buildTimeItem(context, _hourly[0])
                                   ],
                                 ),
-                                _hourly != null && _hourly.isNotEmpty ?
+                                _currentWeather.weather.hourly != null && _currentWeather.weather.hourly.isNotEmpty ?
                                 Container(
                                   margin: EdgeInsets.only(left: 30),
                                   height: 110,
@@ -422,10 +426,10 @@ class _MainState extends State<_MainView> {
                                     ),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: _hourly.length,
+                                    itemCount: _currentWeather.weather.hourly.length,
                                     itemBuilder: (context, index) => _buildTimeItem(
                                       context,
-                                      _hourly[index],
+                                      _currentWeather.weather.hourly[index],
                                     ),
                                   ),
                                 ) :
@@ -434,9 +438,10 @@ class _MainState extends State<_MainView> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      AppRoutes.APP_ROUTE_MAIN2,
-                                      arguments: ScreenArguments3(
-                                          _currentWeather
+                                      AppRoutes.APP_ROUTE_SINGLE_WEATHER,
+                                      arguments: ScreenArguments2(
+                                          _currentWeather.place,
+                                          _currentWeather.weather
                                       ),
                                     );
                                   },
@@ -464,7 +469,7 @@ class _MainState extends State<_MainView> {
                                             ])),
                                   ),
                                 ),
-                                _hourly != null && _hourly.isNotEmpty ?
+                                _currentWeather.weather.history != null && _currentWeather.weather.history.isNotEmpty ?
                                 Container(
                                   margin: EdgeInsets.only(left: 36, right: 30),
                                   width: double.infinity,
@@ -474,10 +479,10 @@ class _MainState extends State<_MainView> {
                                   ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
-                                    children: List.generate(historyTotal != 0 ? historyTotal : _history.length, (index){
+                                    children: List.generate(historyTotal != 0 ? historyTotal : _currentWeather.weather.history.length, (index){
                                       return _buildHistoryItem(
                                         context,
-                                        _history[index],
+                                        _currentWeather.weather.history[index],
                                       );
                                     }
                                     ),
@@ -523,7 +528,7 @@ class _MainState extends State<_MainView> {
                                       onTap: () {
                                         if (_connected) {
                                           if (_currentWeather != null)
-                                            _openForecast(weather: _currentWeather);
+                                            _launchURL("http://wourivice.com/");
                                         } else
                                           Fluttertoast.showToast(
                                               msg: "No connection...");
@@ -1034,32 +1039,15 @@ class _MainState extends State<_MainView> {
       //if(a)
     });
 
-    _viewModel.getHourly().listen((list) {
-      if(list.isNotEmpty) {
-        _hourly.clear();
-        setState(() {
-          _hourly.addAll(list);
-        });
-      }
-    });
-
-    _viewModel.getHistory().listen((list) {
-      if(list.isNotEmpty) {
-        _history.clear();
-        setState(() {
-          _history.addAll(list);
-        });
-      }
-    });
-
     _viewModel.getEmptyLocation().listen((event) {
       if (event) {
-        setState(() {
+        if(!hasLocationPermission) {
           _isFetching = false;
-          _emptyMessage = "You don't have any saved location";
-        });
-        if(!hasLocationPermission)
+          setState(() {
+            _emptyMessage = "You don't have any saved location";
+          });
           Navigator.pushNamed(context, AppRoutes.APP_ROUTE_ADD_LOCATIONS);
+        }
       }
     });
   }
