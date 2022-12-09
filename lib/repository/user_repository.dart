@@ -6,6 +6,8 @@ import 'package:fashion4cast/network/api.dart';
 import 'package:fashion4cast/resources/values/app_strings.dart';
 import 'package:meta/meta.dart';
 
+import '../app/app.dart';
+
 class UserRepository {
 
   var _isSuccessfulRegister = StreamController<Map<String, String>>.broadcast();
@@ -101,6 +103,17 @@ class UserRepository {
           message["message"] = AppStrings.CHANGE_PASSWORD_UNSUCCESSFUL_MSG;
         }
         _isSuccessfulRegister.add(message);
+      }
+    });
+  }
+
+  void deleteAccount() {
+    Api.initialize().deleteAccount().then((result) {
+      if (result != null && result.data != null) {
+        _appPreferences.setUser(user: null);
+        App().logout();
+      } else {
+        //_isSuccessfulRegister.add("Couldn't delete account");
       }
     });
   }

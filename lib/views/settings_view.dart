@@ -119,6 +119,10 @@ class _SettingsState extends State<Settings> {
                             item: "Privacy Policy",
                             index: 5,
                           ),
+                          _bodyItem(
+                            item: "Delete Account",
+                            index: 6,
+                          ),
                       ]),
                     ),
                   ],
@@ -198,6 +202,11 @@ class _SettingsState extends State<Settings> {
               _openPrivacyPolicy();
               break;
             }
+            case 6:{
+              //Navigator.pushNamed(context, AppRoutes.APP_ROUTE_TERMS);
+              _deleteAccount();
+              break;
+            }
             default:{}
           }
         },
@@ -248,6 +257,34 @@ class _SettingsState extends State<Settings> {
     }
   }
 
+  Future<void> _deleteAccount() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete account'),
+          content: Text('Are you sure you want to permanently delete your account?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                _viewModel.deleteAccount();
+                Navigator.pushReplacementNamed(context, AppRoutes.APP_ROUTE_WELCOME);
+              },
+            ),
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   Future<void> _showLogout() async {
     return showDialog<void>(
@@ -258,14 +295,14 @@ class _SettingsState extends State<Settings> {
           title: Text('Logout'),
           content: Text('Are you sure you want to logout?'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('Yes'),
               onPressed: () {
                 _logOut();
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('No'),
               onPressed: () {
                 Navigator.of(context).pop();

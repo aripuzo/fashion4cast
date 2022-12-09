@@ -138,16 +138,19 @@ class _WelcomeState extends State<_WelcomeView> {
                 start: ScreenUtil().setWidth(40),
                 child:
                 SizedBox(
+                  width: ScreenUtil().setWidth(330),
                     child:  Hero(
                       tag: "button",
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         child: Text(
                             "Log In",
                             style: buttonTextStyle,
                             textAlign: TextAlign.center
                         ),
-                        animationDuration: Duration(seconds: 2),
-                        onPressed: () => Navigator.pushNamed(context, AppRoutes.APP_ROUTE_LOGIN)
+                        onPressed: () => Navigator.pushNamed(context, AppRoutes.APP_ROUTE_LOGIN),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(AppColors.PRIMARY_COLOR),
+                          )
                       ),
                     )
                 ),

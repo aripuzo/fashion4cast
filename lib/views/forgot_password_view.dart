@@ -147,7 +147,7 @@ class _ForgotPasswordState extends State<ForgotPassword> with TickerProviderStat
                     builder: (context, snapshot) {
                       return SizedBox(
                           width: ScreenUtil().setWidth(355),
-                          child:  RaisedButton(
+                          child:  ElevatedButton(
                             child: Text(
                                 "Reset Password",
                                 style: TextStyle(

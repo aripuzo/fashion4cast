@@ -6,8 +6,6 @@ import 'package:fashion4cast/network/api.dart';
 import 'package:fashion4cast/resources/values/app_strings.dart';
 import 'package:meta/meta.dart';
 
-import '../databases/dao/place_dao.dart';
-
 class LoginRepository {
 
   var _isSuccessfulLogin = StreamController<String>.broadcast();

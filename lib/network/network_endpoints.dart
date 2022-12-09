@@ -30,6 +30,9 @@ class NetworkEndpoints {
 
   //Ads
   static const String AD_API = "/ads";
+
+  //Ads
+  static const String DELETE_ACCOUNT_API = "/account/profile/delete";
 }
 
 class AppConstants{

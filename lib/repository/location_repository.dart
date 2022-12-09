@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:fashion4cast/app/app.dart';
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
 import 'package:fashion4cast/models/temp_weather.dart';
 import 'package:fashion4cast/network/api.dart';
 import 'package:meta/meta.dart';
+
+import '../databases/app_database.dart';
 
 
 class LocationRepository {

@@ -8,6 +8,7 @@ import 'package:fashion4cast/repository/product_repository.dart';
 import 'package:flutter/material.dart';
 
 import '../databases/app_database.dart';
+import '../models/place.dart';
 
 class WeeklySuggestionViewModel{
 

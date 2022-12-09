@@ -260,7 +260,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                   SizedBox(
                       width: ScreenUtil().setWidth(355),
                       child: Center(
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () {
                              Navigator.pushNamed(context, AppRoutes.APP_ROUTE_REGISTER);
                           },

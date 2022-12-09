@@ -899,7 +899,7 @@ class _MainState extends State<_MainView> {
                     SizedBox(height: 8),
                     Text(
                         weather != null
-                            ? "${(weather.chanceOfRain * 100).toInt()}%"
+                            ? "${(weather.chanceOfRain).toInt()}%"
                             : "",
                         style: TextStyle(
                             color: Colors.white.withOpacity(0.6),

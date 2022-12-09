@@ -1,13 +1,14 @@
 import 'package:circle_checkbox/redev_checkbox.dart';
 import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/app/app_routes.dart';
-import 'package:fashion4cast/databases/app_database.dart';
 import 'package:fashion4cast/resources/values/app_colors.dart';
 import 'package:fashion4cast/resources/values/text_styles.dart';
 import 'package:fashion4cast/view_models/select_location_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../databases/app_database.dart';
 
 class SelectLocations extends StatefulWidget {
   @override
@@ -78,7 +79,7 @@ class _SelectCitiesState extends State<SelectLocations> {
                         ),
                         SizedBox(
                           width: ScreenUtil().setWidth(110),
-                          child: FlatButton(
+                          child: TextButton(
                             onPressed:() => Navigator.pushNamed(context, AppRoutes.APP_ROUTE_ADD_LOCATIONS),
                             child: Text("+ Add City",
                                 style: TextStyle(

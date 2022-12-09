@@ -8,6 +8,7 @@ import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import '../databases/app_database.dart';
 
+
 class WeeklyForecastViewModel{
 
   // -------------------------------------------------------- Variables -----------------------------------------------------------------------------

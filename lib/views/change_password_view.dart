@@ -137,7 +137,7 @@ class _ChangePasswordState extends State<ChangePassword> with TickerProviderStat
                       builder: (context, snapshot) {
                         return SizedBox(
                           width: ScreenUtil().setWidth(355),
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             child: Text(
                                 AppStrings.CHANGE_PASSWORD_BUTTON_LABEL,
                                 style: TextStyle(
@@ -149,7 +149,6 @@ class _ChangePasswordState extends State<ChangePassword> with TickerProviderStat
                                 ),
                                 textAlign: TextAlign.center
                             ),
-                            animationDuration: Duration(seconds: 2),
                             onPressed: snapshot.data ?? false
                                 ?
                                 () {

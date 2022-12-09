@@ -170,7 +170,7 @@ class _ResetPasswordState extends State<ResetPassword> with TickerProviderStateM
                       builder: (context, snapshot) {
                         return SizedBox(
                             width: ScreenUtil().setWidth(355),
-                            child:  RaisedButton(
+                            child:  ElevatedButton(
                               child: Text(
                                   "Complete Reset",
                                   style: TextStyle(

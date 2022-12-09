@@ -396,7 +396,7 @@ class _SingleWeatherState extends State<_SingleWeatherView> {
                               child:
                               SizedBox(
                                   child:   Text(
-                                      widget.args.weather != null ? "${(widget.args.weather.chanceOfRain * 100).toInt()}%" : "",
+                                      widget.args.weather != null ? "${(widget.args.weather.chanceOfRain).toInt()}%" : "",
                                       style: TextStyle(
                                           color:  Colors.white,
                                           fontWeight: FontWeight.w500,

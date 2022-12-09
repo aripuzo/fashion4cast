@@ -238,7 +238,7 @@ class _EditProfileState extends State<EditProfile> with TickerProviderStateMixin
                         builder: (context, snapshot) {
                           return SizedBox(
                             width: ScreenUtil().setWidth(355),
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               child: Text(
                                   AppStrings.CHANGE_PASSWORD_BUTTON_LABEL,
                                   style: TextStyle(
@@ -250,7 +250,6 @@ class _EditProfileState extends State<EditProfile> with TickerProviderStateMixin
                                   ),
                                   textAlign: TextAlign.center
                               ),
-                              animationDuration: Duration(seconds: 2),
                               onPressed: () {
                                 setState(() {
                                   _isLoading = true;

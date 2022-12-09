@@ -1,5 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,7 +20,6 @@ final emulatorHost =
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   final database = openDatabase(
     join(await getDatabasesPath(), 'fashion4cast_database.db'),
     onCreate: (db, version) {
@@ -35,10 +32,6 @@ void main() async {
   // database.then((value) => {
   //   value.execute("CREATE TABLE Employee(id INTEGER PRIMARY KEY, firstname TEXT, lastname TEXT, mobileno TEXT,emailId TEXT )")
   // });
-
-  if (USE_DATABASE_EMULATOR) {
-    FirebaseDatabase.instance.useDatabaseEmulator(emulatorHost, emulatorPort);
-  }
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

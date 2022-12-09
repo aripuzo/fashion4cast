@@ -1,3 +1,5 @@
+
+
 import '../../databases/app_database.dart';
 
 class PlaceAutoCompleteData {

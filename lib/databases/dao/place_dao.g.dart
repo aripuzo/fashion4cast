@@ -6,6 +6,4 @@ part of 'place_dao.dart';
 // DaoGenerator
 // **************************************************************************
 
-mixin _$PlaceDaoMixin on DatabaseAccessor<MyDatabase> {
-  $PlacesTable get places => attachedDatabase.places;
-}
+mixin _$PlaceDaoMixin on DatabaseAccessor<MyDatabase> {}

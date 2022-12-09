@@ -392,4 +392,28 @@ class Api {
       return null;
     }
   }
+
+  Future<PlaceData> deleteAccount() async {
+    try {
+      Response response = await dio.post(NetworkEndpoints.DELETE_ACCOUNT_API,
+          data: {
+          });
+      if (response == null || response.data == null) {
+        throw new Exception("Error while fetching data");
+      }
+      return PlaceData.fromJson(response.data);
+    } on DioError catch (e) {
+      logger.e('''Error message is ${e.message}
+                  Error type is ${e.type}
+                  Error is ${e.error}
+                  For request ${e.requestOptions}
+                  And Response ${e.response != null ? 'request => ${e.response.requestOptions} and data => ${e.response.data} headers => ${e.response.headers}' : 'request is ${e.requestOptions}'}
+                  Stacktrace is ${e.toString()}'''
+      );
+      if (e.response != null && e.response.data != null) {
+        return PlaceData.fromJson(e.response.data);
+      }
+      return null;
+    }
+  }
 }

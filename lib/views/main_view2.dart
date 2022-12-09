@@ -294,7 +294,7 @@ class _MainState2 extends State<_MainView2> {
                                   //width: ScreenUtil().setWidth(49),
                                   //height: ScreenUtil().setHeight(27),
                                     child:   Text(
-                                        widget.currentWeather.weather != null ? "${(widget.currentWeather.weather.chanceOfRain * 100).toInt()}%" : "",
+                                        widget.currentWeather.weather != null ? "${(widget.currentWeather.weather.chanceOfRain).toInt()}%" : "",
                                         style: TextStyle(
                                             color:  Colors.white,
                                             fontWeight: FontWeight.w500,

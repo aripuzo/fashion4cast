@@ -11,18 +11,9 @@ class PlaceDao extends DatabaseAccessor<MyDatabase> with _$PlaceDaoMixin {
   // of this object.
   PlaceDao(MyDatabase db) : super(db);
 
-  final String tableTodo = 'places';
-  final String columnId = 'id';
-  final String columnDescription = 'description';
-  final String columnName = 'name';
-  final String columnLat = 'lat';
-  final String columnLng = 'lng';
-  final String columnMap = 'map';
-  final String columnExternalId = 'externalId';
-
   @override
   Future < int > updatePlace(Place usr) {
-    return into(places)
+    return into(db.places)
         .insertOnConflictUpdate(usr);
   }
 
@@ -33,11 +24,11 @@ class PlaceDao extends DatabaseAccessor<MyDatabase> with _$PlaceDaoMixin {
   }
 
   Future<Place> getPlace(int id) async {
-    return (select(places)..where((place) => place.id.equals(id))).getSingle();
+    return (select(db.places)..where((place) => place.id.equals(id))).getSingle();
   }
 
   Stream<List<Place>> watchPlaces() {
-    return (select(places)).watch();
+    return (select(db.places)).watch();
   }
 
   Future close() async {
@@ -46,6 +37,6 @@ class PlaceDao extends DatabaseAccessor<MyDatabase> with _$PlaceDaoMixin {
   }
 
   Future<List<Place>> getPlaces() async {
-    return select(places).get();
+    return select(db.places).get();
   }
 }

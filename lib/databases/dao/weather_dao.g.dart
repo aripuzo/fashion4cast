@@ -6,6 +6,4 @@ part of 'weather_dao.dart';
 // DaoGenerator
 // **************************************************************************
 
-mixin _$WeatherDaoMixin on DatabaseAccessor<MyDatabase> {
-  $WeathersTable get weathers => attachedDatabase.weathers;
-}
+mixin _$WeatherDaoMixin on DatabaseAccessor<MyDatabase> {}

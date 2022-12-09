@@ -3,16 +3,17 @@ import 'dart:async';
 import 'package:fashion4cast/app/app.dart';
 import 'package:fashion4cast/databases/app_preferences.dart';
 import 'package:fashion4cast/models/user.dart';
-import 'package:fashion4cast/repository/location_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import '../databases/app_database.dart';
+import '../repository/user_repository.dart';
+
 
 class SettingsViewModel{
 
   // -------------------------------------------------------- Variables -----------------------------------------------------------------------------
-  //LocationRepository _locationRepository;
+  UserRepository _userRepository;
   AppPreferences _appPreferences;
 
   static SettingsViewModel _instance;
@@ -30,13 +31,13 @@ class SettingsViewModel{
   factory SettingsViewModel(App app){
     _instance
     ??= // NULL Check
-    SettingsViewModel._internal(gamePlayRepository: app.getLocationRepository(appPreferences: app.getAppPreferences()));
+    SettingsViewModel._internal(userRepository: app.getUserRepository(appPreferences: app.getAppPreferences()));
     return _instance;
   }
 
-  SettingsViewModel._internal({@required LocationRepository gamePlayRepository}){
+  SettingsViewModel._internal({@required UserRepository userRepository}){
     //_registerFormObserver = registerFormObserver;
-    //_locationRepository = gamePlayRepository;
+    _userRepository = userRepository;
     _appPreferences = App().getAppPreferences();
     StreamingSharedPreferences.instance.then((value) => preferences = value);
     _init();
@@ -66,6 +67,10 @@ class SettingsViewModel{
   void setUseCurrentLocation(bool val){
     _appPreferences.setUseCurrentLocation(hasDevice: val);
     useCurrentLocation = val;
+  }
+
+  void deleteAccount(){
+    _userRepository.deleteAccount();
   }
 
   void logout() {

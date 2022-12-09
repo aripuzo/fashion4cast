@@ -17,12 +17,12 @@ class Place extends DataClass implements Insertable<Place> {
   final String body;
   Place(
       {@required this.id,
-      @required this.name,
-      this.description,
-      @required this.lat,
-      @required this.lng,
-      @required this.external_id,
-      this.body});
+        @required this.name,
+        this.description,
+        @required this.lat,
+        @required this.lng,
+        @required this.external_id,
+        this.body});
   factory Place.fromData(Map<String, dynamic> data, {String prefix}) {
     final effectivePrefix = prefix ?? '';
     return Place(
@@ -112,13 +112,13 @@ class Place extends DataClass implements Insertable<Place> {
   }
 
   Place copyWith(
-          {int id,
-          String name,
-          String description,
-          double lat,
-          double lng,
-          String external_id,
-          String body}) =>
+      {int id,
+        String name,
+        String description,
+        double lat,
+        double lng,
+        String external_id,
+        String body}) =>
       Place(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -131,14 +131,14 @@ class Place extends DataClass implements Insertable<Place> {
   @override
   String toString() {
     return (StringBuffer('Place(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('lat: $lat, ')
-          ..write('lng: $lng, ')
-          ..write('external_id: $external_id, ')
-          ..write('body: $body')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('name: $name, ')
+      ..write('description: $description, ')
+      ..write('lat: $lat, ')
+      ..write('lng: $lng, ')
+      ..write('external_id: $external_id, ')
+      ..write('body: $body')
+      ..write(')'))
         .toString();
   }
 
@@ -148,14 +148,14 @@ class Place extends DataClass implements Insertable<Place> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Place &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.description == this.description &&
-          other.lat == this.lat &&
-          other.lng == this.lng &&
-          other.external_id == this.external_id &&
-          other.body == this.body);
+          (other is Place &&
+              other.id == this.id &&
+              other.name == this.name &&
+              other.description == this.description &&
+              other.lat == this.lat &&
+              other.lng == this.lng &&
+              other.external_id == this.external_id &&
+              other.body == this.body);
 }
 
 class PlacesCompanion extends UpdateCompanion<Place> {
@@ -209,12 +209,12 @@ class PlacesCompanion extends UpdateCompanion<Place> {
 
   PlacesCompanion copyWith(
       {Value<int> id,
-      Value<String> name,
-      Value<String> description,
-      Value<double> lat,
-      Value<double> lng,
-      Value<String> external_id,
-      Value<String> body}) {
+        Value<String> name,
+        Value<String> description,
+        Value<double> lat,
+        Value<double> lng,
+        Value<String> external_id,
+        Value<String> body}) {
     return PlacesCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -256,14 +256,14 @@ class PlacesCompanion extends UpdateCompanion<Place> {
   @override
   String toString() {
     return (StringBuffer('PlacesCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('description: $description, ')
-          ..write('lat: $lat, ')
-          ..write('lng: $lng, ')
-          ..write('external_id: $external_id, ')
-          ..write('body: $body')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('name: $name, ')
+      ..write('description: $description, ')
+      ..write('lat: $lat, ')
+      ..write('lng: $lng, ')
+      ..write('external_id: $external_id, ')
+      ..write('body: $body')
+      ..write(')'))
         .toString();
   }
 }
@@ -287,11 +287,11 @@ class $PlacesTable extends Places with TableInfo<$PlacesTable, Place> {
   GeneratedColumn<String> get name => _name ??= GeneratedColumn<String>(
       'name', aliasedName, false,
       additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 32),
+      GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 32),
       type: const StringType(),
       requiredDuringInsert: true);
   final VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
+  const VerificationMeta('description');
   GeneratedColumn<String> _description;
   @override
   GeneratedColumn<String> get description =>
@@ -310,7 +310,7 @@ class $PlacesTable extends Places with TableInfo<$PlacesTable, Place> {
       _lng ??= GeneratedColumn<double>('lng', aliasedName, false,
           type: const RealType(), requiredDuringInsert: true);
   final VerificationMeta _external_idMeta =
-      const VerificationMeta('external_id');
+  const VerificationMeta('external_id');
   GeneratedColumn<String> _external_id;
   @override
   GeneratedColumn<String> get external_id => _external_id ??=
@@ -401,13 +401,13 @@ class Weather extends DataClass implements Insertable<Weather> {
   final bool isToday;
   Weather(
       {@required this.id,
-      this.day,
-      this.minTemp,
-      this.maxTemp,
-      this.date,
-      this.icon,
-      this.timestamp,
-      this.isToday});
+        this.day,
+        this.minTemp,
+        this.maxTemp,
+        this.date,
+        this.icon,
+        this.timestamp,
+        this.isToday});
   factory Weather.fromData(Map<String, dynamic> data, {String prefix}) {
     final effectivePrefix = prefix ?? '';
     return Weather(
@@ -509,14 +509,14 @@ class Weather extends DataClass implements Insertable<Weather> {
   }
 
   Weather copyWith(
-          {int id,
-          String day,
-          double minTemp,
-          double maxTemp,
-          String date,
-          String icon,
-          String timestamp,
-          bool isToday}) =>
+      {int id,
+        String day,
+        double minTemp,
+        double maxTemp,
+        String date,
+        String icon,
+        String timestamp,
+        bool isToday}) =>
       Weather(
         id: id ?? this.id,
         day: day ?? this.day,
@@ -530,15 +530,15 @@ class Weather extends DataClass implements Insertable<Weather> {
   @override
   String toString() {
     return (StringBuffer('Weather(')
-          ..write('id: $id, ')
-          ..write('day: $day, ')
-          ..write('minTemp: $minTemp, ')
-          ..write('maxTemp: $maxTemp, ')
-          ..write('date: $date, ')
-          ..write('icon: $icon, ')
-          ..write('timestamp: $timestamp, ')
-          ..write('isToday: $isToday')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('day: $day, ')
+      ..write('minTemp: $minTemp, ')
+      ..write('maxTemp: $maxTemp, ')
+      ..write('date: $date, ')
+      ..write('icon: $icon, ')
+      ..write('timestamp: $timestamp, ')
+      ..write('isToday: $isToday')
+      ..write(')'))
         .toString();
   }
 
@@ -548,15 +548,15 @@ class Weather extends DataClass implements Insertable<Weather> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Weather &&
-          other.id == this.id &&
-          other.day == this.day &&
-          other.minTemp == this.minTemp &&
-          other.maxTemp == this.maxTemp &&
-          other.date == this.date &&
-          other.icon == this.icon &&
-          other.timestamp == this.timestamp &&
-          other.isToday == this.isToday);
+          (other is Weather &&
+              other.id == this.id &&
+              other.day == this.day &&
+              other.minTemp == this.minTemp &&
+              other.maxTemp == this.maxTemp &&
+              other.date == this.date &&
+              other.icon == this.icon &&
+              other.timestamp == this.timestamp &&
+              other.isToday == this.isToday);
 }
 
 class WeathersCompanion extends UpdateCompanion<Weather> {
@@ -612,13 +612,13 @@ class WeathersCompanion extends UpdateCompanion<Weather> {
 
   WeathersCompanion copyWith(
       {Value<int> id,
-      Value<String> day,
-      Value<double> minTemp,
-      Value<double> maxTemp,
-      Value<String> date,
-      Value<String> icon,
-      Value<String> timestamp,
-      Value<bool> isToday}) {
+        Value<String> day,
+        Value<double> minTemp,
+        Value<double> maxTemp,
+        Value<String> date,
+        Value<String> icon,
+        Value<String> timestamp,
+        Value<bool> isToday}) {
     return WeathersCompanion(
       id: id ?? this.id,
       day: day ?? this.day,
@@ -664,15 +664,15 @@ class WeathersCompanion extends UpdateCompanion<Weather> {
   @override
   String toString() {
     return (StringBuffer('WeathersCompanion(')
-          ..write('id: $id, ')
-          ..write('day: $day, ')
-          ..write('minTemp: $minTemp, ')
-          ..write('maxTemp: $maxTemp, ')
-          ..write('date: $date, ')
-          ..write('icon: $icon, ')
-          ..write('timestamp: $timestamp, ')
-          ..write('isToday: $isToday')
-          ..write(')'))
+      ..write('id: $id, ')
+      ..write('day: $day, ')
+      ..write('minTemp: $minTemp, ')
+      ..write('maxTemp: $maxTemp, ')
+      ..write('date: $date, ')
+      ..write('icon: $icon, ')
+      ..write('timestamp: $timestamp, ')
+      ..write('isToday: $isToday')
+      ..write(')'))
         .toString();
   }
 }

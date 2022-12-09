@@ -164,7 +164,7 @@ class _WeeklySuggestionState extends State<_WeeklySuggestionView> {
                             child: SizedBox(
                                 width: ScreenUtil().setWidth(130),
                                 height: ScreenUtil().setHeight(35),
-                                child:  RaisedButton(
+                                child:  TextButton(
                                   child: Text(
                                       _highligted != null  && _highligted.addButtonLabel.isNotEmpty ? _highligted.addButtonLabel :"Buy now",
                                       style: TextStyle(

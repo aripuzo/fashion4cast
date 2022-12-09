@@ -136,25 +136,6 @@ class App extends StatelessWidget {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
     OneSignal.shared.setAppId("380dc082-5231-4cc2-ab51-a03da5a0e4c2");
-
-
-//     OneSignal.shared.init(
-//         "e6f14b42-3e13-4903-8f9d-a912d4ec78fb",
-//         iOSSettings: {
-//           OSiOSSettings.autoPrompt: false,
-//           OSiOSSettings.inAppLaunchUrl: false
-//         }
-//     );
-//     OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
-//
-// // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-//     //await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
-//
-//     var deviceState = await OneSignal.shared.getDeviceState();
-//     var status = await OneSignal.shared.getPermissionSubscriptionState();
-//
-//     if(!status.permissionStatus.hasPrompted)
-//       OneSignal.shared.addTrigger("prompt_ios", "true");
   }
 
 }

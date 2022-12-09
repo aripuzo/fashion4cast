@@ -270,7 +270,7 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                   SizedBox(
                       width: ScreenUtil().setWidth(355),
                       child:   Center(
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () {
                             Navigator.pop(context, false);
                           },

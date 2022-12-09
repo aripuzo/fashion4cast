@@ -1,5 +1,6 @@
 class Weather {
   Weather({
+    this.id,
     this.minTemp,
     this.maxTemp,
     this.day,
@@ -9,6 +10,7 @@ class Weather {
     this.isToday,
   });
 
+  int id = 0;
   double minTemp;
   double maxTemp;
   String day;
@@ -25,6 +27,7 @@ class Weather {
     timestamp: json["timestamp"],
     icon: json["icon"],
     isToday: json["is_today"],
+    id: json["id"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -35,5 +38,6 @@ class Weather {
     "timestamp": timestamp,
     "icon": icon,
     "is_today": isToday,
+    "id": id,
   };
 }

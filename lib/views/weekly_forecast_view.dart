@@ -13,6 +13,7 @@ import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import '../databases/app_database.dart';
 
+
 class WeeklyForecast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -391,15 +392,15 @@ class _WeeklyForecastState extends State<_WeeklyForecastView> {
   Widget _suggestionListItem(String item) {
     return new GestureDetector(
         onTap: () {
-          // Navigator.pushNamed(
-          //   context,
-          //   AppRoutes.APP_ROUTE_WEEKLY_SUGGESTION,
-          //   arguments: ScreenArguments(
-          //     widget.place,
-          //     _getCondition(item),
-          //     _weathers
-          //   ),
-          // );
+          Navigator.pushNamed(
+            context,
+            AppRoutes.APP_ROUTE_WEEKLY_SUGGESTION,
+            arguments: ScreenArguments(
+              widget.place,
+              _getCondition(item),
+              _weathers
+            ),
+          );
         },
         child: Container(
           width: ScreenUtil().setWidth(174),

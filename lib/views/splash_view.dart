@@ -14,13 +14,18 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     //ScreenUtil.init(designSize: Size(), allowFontScaling: true);
     return ScreenUtilInit(
-        designSize: Size(414, 896),
-        builder: () => MaterialApp(
+      designSize: const Size(414, 896),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context , child) {
+        return MaterialApp(
           theme: AppStyles.defaultTheme(),
           debugShowCheckedModeBanner: false,
-          home: SplashView(),
           onGenerateRoute: AppRoutes().getRoutes,
-        ),
+          home: child,
+        );
+      },
+      child: SplashView(),
     );
   }
 }

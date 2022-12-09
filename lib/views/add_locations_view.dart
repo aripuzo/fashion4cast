@@ -194,7 +194,7 @@ class _AddLocationsState extends State<AddLocations> {
           title: Text('Add location'),
           content: Text('Are you sure you want to add location?'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('Yes'),
               onPressed: () {
                 _viewModel.addPlace(placeId);
@@ -204,7 +204,7 @@ class _AddLocationsState extends State<AddLocations> {
                 });
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('No'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -236,7 +236,7 @@ class _AddLocationsState extends State<AddLocations> {
               ),
               SizedBox(
                 width: ScreenUtil().setWidth(70),
-                child: FlatButton(
+                child: TextButton(
                   child: Text("+ Add",
                       style: TextStyle(
                         fontFamily: 'HelveticaNeue',

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../databases/app_database.dart';
 
+
 class AddLocationViewModel{
 
   // -------------------------------------------------------- Variables -----------------------------------------------------------------------------
